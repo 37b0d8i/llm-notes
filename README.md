@@ -2,7 +2,9 @@
 
 A self-hosting, auto-indexed file hub powered by GitHub Pages and GitHub Actions. Drop files into category folders, push, and the page updates automatically — no manual index maintenance ever.
 
-**Live page**: https://37b0d8i.github.io/llm_notes/
+**Live page**: https://37b0d8i.github.io/llm-notes/
+
+**Repository**: https://github.com/37b0d8i/llm-notes
 
 ---
 
@@ -107,7 +109,7 @@ Files with unknown extensions fall back to **documents**.
 If the workflow didn't fire (e.g. a draft push), trigger it manually:
 
 ```
-https://github.com/37b0d8i/llm_notes/actions → "Generate Index" → Run workflow
+https://github.com/37b0d8i/llm-notes/actions → "Generate Index" → Run workflow
 ```
 
 ---
