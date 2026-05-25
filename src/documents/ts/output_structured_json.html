@@ -156,11 +156,11 @@
 <body>
     <div class="container">
         <header>
-            <h1 class="article-title">Hands-On Lab: Force AI to return structured JSON & Parse AI outputs in code</h1>
+            <h1 class="article-title">Force LLM to return structured JSON & Parse Model outputs in code</h1>
         </header>
         
         <div class="content">
-            <h4>Day 5 Hands-On Lab: Structured JSON + Parsing in TypeScript</h4>
+            <h4>Structured JSON + Parsing in TypeScript</h4>
             
             <h2>What you will produce</h2>
             <ul>
@@ -171,12 +171,12 @@
 
             <h2>Prerequisites</h2>
             <ul>
-                <li>Day 3 CLI assistant repository space exists locally</li>
+                <li>previous CLI assistant repository space exists locally</li>
                 <li>Bun runtime engine is installed on your workstation</li>
                 <li>Your valid <code>OPENAI_API_KEY</code> is correctly assigned within a root <code>.env</code> file</li>
             </ul>
 
-            <h2>Part A — Force AI to return structured JSON</h2>
+            <h2>Part A — Force Model to return structured JSON</h2>
             
             <h3>Step 1: Pick a small task with clear fields</h3>
             <p>Select a scenario where semantic consistency is required. For this lab, we use a simple parsing profile:</p>
@@ -203,7 +203,7 @@
             <h3>Step 5: Build the prompt with strict output instructions</h3>
             <p>Separate structural instructions inside the system role parameter to increase execution compliance and minimize direct injection vectors inside the user prompt.</p>
 
-            <h2>Part B — Parse AI output in code</h2>
+            <h2>Part B — Parse Model output in code</h2>
             
             <h3>Step 6: Capture untrusted raw text</h3>
             <p>Treat all text outputs returning directly from external model responses as untrusted data sequences.</p>
