@@ -13,8 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Generate index.json
-        run: python3 scripts/generate_index.py
+        run: node src/_scripts/generate_index.mjs
 
       - name: Commit & push
         run: |

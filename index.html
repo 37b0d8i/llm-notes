@@ -42,60 +42,18 @@
   <div id="content">Loading...</div>
 
   <script>
-    const CATEGORIES = {
-      '📄 Documents':   ['html', 'htm', 'md', 'txt', 'pdf', 'doc', 'docx'],
-      '🖼️ Images':      ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'ico'],
-      '🎵 Audio':       ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'],
-      '🎬 Video':       ['mp4', 'webm', 'mkv', 'avi', 'mov'],
-      '📦 Data':        ['json', 'yaml', 'yml', 'xml', 'csv', 'tsv'],
-      '🧩 Code':        ['js', 'ts', 'py', 'sh', 'bash', 'css', 'sql'],
-      '🗜️ Archives':    ['zip', 'tar', 'gz', 'rar', '7z'],
-      '📁 Folders':     ['directory'],
+    const CATEGORY_META = {
+      documents: { icon: '📄', label: 'Documents' },
+      images:    { icon: '🖼️', label: 'Images' },
+      audio:     { icon: '🎵', label: 'Audio' },
+      video:     { icon: '🎬', label: 'Video' },
+      data:      { icon: '📦', label: 'Data' },
+      code:      { icon: '🧩', label: 'Code' },
+      archives:  { icon: '🗜️', label: 'Archives' },
     };
-
-    const ICON_MAP = {
-      'html': '🌐', 'htm': '🌐',
-      'md': '📝', 'txt': '📝',
-      'pdf': '📕',
-      'png': '🖼️', 'jpg': '🖼️', 'jpeg': '🖼️', 'gif': '🖼️', 'svg': '🖼️', 'webp': '🖼️',
-      'mp3': '🎵', 'wav': '🎵', 'ogg': '🎵', 'flac': '🎵', 'aac': '🎵', 'm4a': '🎵',
-      'mp4': '🎬', 'webm': '🎬', 'mkv': '🎬',
-      'json': '📋', 'yaml': '📋', 'yml': '📋', 'xml': '📋',
-      'py': '🐍', 'js': '📜', 'ts': '📜', 'sh': '📜', 'css': '📜',
-      'zip': '🗜️', 'tar': '🗜️', 'gz': '🗜️',
-    };
-
-    function getExt(name) {
-      if (!name || name.endsWith('/')) return 'directory';
-      const parts = name.split('.');
-      return parts.length > 1 ? parts.pop().toLowerCase() : 'txt';
-    }
-
-    function getCategory(ext) {
-      for (const [cat, exts] of Object.entries(CATEGORIES)) {
-        if (exts.includes(ext)) return cat;
-      }
-      return '📄 Documents';
-    }
-
-    function iconFor(name, ext) {
-      return ICON_MAP[ext] || '📄';
-    }
-
-    async function loadIndex() {
-      try {
-        const res = await fetch('index.json');
-        if (!res.ok) throw new Error('index.json not found');
-        const files = await res.json();
-        render(files);
-      } catch {
-        // index.json not generated yet — show a message
-        document.getElementById('content').innerHTML =
-          '<p class="no-results">index.json not found. Push to trigger regeneration.</p>';
-      }
-    }
 
     function formatSize(bytes) {
+      if (bytes == null) return '';
       if (bytes < 1024) return bytes + ' B';
       if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
       return (bytes/1024/1024).toFixed(1) + ' MB';
@@ -103,16 +61,24 @@
 
     let allFiles = [];
 
-    function render(files) {
-      allFiles = files;
-      filterFiles();
+    async function loadIndex() {
+      try {
+        const res = await fetch('index.json');
+        if (!res.ok) throw new Error('index.json not found');
+        allFiles = await res.json();
+        render();
+      } catch {
+        document.getElementById('content').innerHTML =
+          '<p class="no-results">index.json not found. Push to trigger regeneration.</p>';
+      }
     }
 
-    function filterFiles() {
+    function render(files) {
+      files = files || allFiles;
       const q = document.getElementById('search').value.toLowerCase();
       const filtered = q
-        ? allFiles.filter(f => f.name.toLowerCase().includes(q))
-        : allFiles;
+        ? files.filter(f => f.name.toLowerCase().includes(q) || f.path.toLowerCase().includes(q))
+        : files;
 
       if (filtered.length === 0) {
         document.getElementById('content').innerHTML = '<p class="no-results">No files found</p>';
@@ -122,25 +88,24 @@
       // Group by category
       const byCat = {};
       for (const f of filtered) {
-        const ext = getExt(f.name);
-        const cat = getCategory(ext);
+        const cat = f.category || 'documents';
         if (!byCat[cat]) byCat[cat] = [];
-        byCat[cat].push({ ...f, ext });
+        byCat[cat].push(f);
       }
 
       let html = '';
-      for (const [cat, catFiles] of Object.entries(byCat)) {
-        const icon = cat.split(' ')[0];
+      for (const [cat, catFiles] of Object.entries(byCat).sort()) {
+        const meta = CATEGORY_META[cat] || { icon: '📄', label: cat };
         html += `<div class="category">
           <div class="category-header">
-            <span class="category-icon">${icon}</span>
-            <span class="category-name">${cat.replace(/^\S+\s/, '')}</span>
+            <span class="category-icon">${meta.icon}</span>
+            <span class="category-name">${meta.label}</span>
             <span class="category-count">${catFiles.length}</span>
           </div>
           <div class="file-grid">`;
         for (const f of catFiles.sort((a,b) => a.name.localeCompare(b.name))) {
-          html += `<a class="file-card" href="${f.name}">
-            <div class="file-name">${iconFor(f.name, f.ext)} ${f.name.split('/').pop()}</div>
+          html += `<a class="file-card" href="${f.path}">
+            <div class="file-name">${f.name}</div>
             <div class="file-meta">
               <span class="file-tag">.${f.ext}</span>
               ${f.size != null ? `<span>${formatSize(f.size)}</span>` : ''}
@@ -151,6 +116,8 @@
       }
       document.getElementById('content').innerHTML = html;
     }
+
+    function filterFiles() { render(); }
 
     loadIndex();
   </script>
