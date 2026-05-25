@@ -1,9 +1,37 @@
 [
   {
+    "name": "prompt-engineering-lab",
+    "path": "src/documents/prompt/prompt-engineering-lab.html",
+    "category": "documents",
+    "ext": "html",
+    "size": 34014
+  },
+  {
+    "name": "prompt-engineering",
+    "path": "src/documents/prompt/prompt-engineering.html",
+    "category": "documents",
+    "ext": "html",
+    "size": 6693
+  },
+  {
     "name": "prompt_lib_template",
-    "path": "src/documents/prompt_lib_template.html",
+    "path": "src/documents/prompt/prompt_lib_template.html",
     "category": "documents",
     "ext": "html",
     "size": 26534
+  },
+  {
+    "name": "ai-assist-cli_ts",
+    "path": "src/documents/ts/ai-assist-cli_ts.html",
+    "category": "documents",
+    "ext": "html",
+    "size": 9405
+  },
+  {
+    "name": "simple text-in_text-out_ts",
+    "path": "src/documents/ts/simple text-in_text-out_ts.html",
+    "category": "documents",
+    "ext": "html",
+    "size": 11337
   }
 ]
