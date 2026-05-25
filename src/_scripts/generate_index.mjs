@@ -49,10 +49,14 @@ function walk(dir, prefix = "") {
       entries.push(...walk(full, rel));
     } else {
       const ext = extname(entry).replace(".", "").toLowerCase() || "txt";
+      // Derive category from the directory immediately under src/
+      // e.g. src/documents/prompt/foo.html → "prompt"
+      const parts = rel.split("/");
+      const dirCategory = parts.length > 2 ? parts[2] : (parts.length > 1 ? parts[1] : "documents");
       entries.push({
         name: entry.replace(/\.[^.]+$/, ""),
         path: rel,
-        category: getCategory(ext),
+        category: dirCategory,
         ext,
         size: stat.size,
       });
