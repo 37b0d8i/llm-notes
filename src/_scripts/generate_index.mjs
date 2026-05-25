@@ -17,6 +17,9 @@ const IGNORE = new Set([
   "generate_index.mjs",
   "README.md",
   ".gitignore",
+  "_scripts",
+  "_templates",
+  "node_modules",
 ]);
 
 const CATEGORIES = {

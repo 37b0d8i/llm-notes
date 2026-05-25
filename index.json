@@ -4,34 +4,48 @@
     "path": "src/documents/prompt/prompt-engineering-lab.html",
     "category": "prompt",
     "ext": "html",
-    "size": 34014
+    "size": 33781
   },
   {
     "name": "prompt-engineering",
     "path": "src/documents/prompt/prompt-engineering.html",
     "category": "prompt",
     "ext": "html",
-    "size": 6693
+    "size": 6502
   },
   {
     "name": "prompt_lib_template",
     "path": "src/documents/prompt/prompt_lib_template.html",
     "category": "prompt",
     "ext": "html",
-    "size": 26534
+    "size": 26294
   },
   {
     "name": "ai-assist-cli_ts",
     "path": "src/documents/ts/ai-assist-cli_ts.html",
     "category": "ts",
     "ext": "html",
-    "size": 9405
+    "size": 9287
+  },
+  {
+    "name": "output_structured_json",
+    "path": "src/documents/ts/output_structured_json.html",
+    "category": "ts",
+    "ext": "html",
+    "size": 13010
+  },
+  {
+    "name": "return_valid_json",
+    "path": "src/documents/ts/return_valid_json.html",
+    "category": "ts",
+    "ext": "html",
+    "size": 13010
   },
   {
     "name": "simple text-in_text-out_ts",
     "path": "src/documents/ts/simple text-in_text-out_ts.html",
     "category": "ts",
     "ext": "html",
-    "size": 11337
+    "size": 11233
   }
 ]
