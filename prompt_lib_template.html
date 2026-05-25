@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --border: #e5e5e5;
+            --text-main: #171717;
+            --text-muted: #737373;
+            --accent: #4f46e5;
+            --accent-light: #f5f3ff;
+            --code-bg: #1a1a1a;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --max-width: 800px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 80px 24px;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+            overflow-x: auto;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            padding: 6px 12px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-main);
+            background-color: #f0f0f0;
+        }
+
+        .filter-btn.active {
+            color: var(--accent);
+            background-color: var(--accent-light);
+        }
+
+        /* Cards Layout */
+        .template-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .template-card:hover {
+            border-color: #ccc;
+        }
+
+        .template-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .header-main {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .template-title {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .template-badge {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .template-toggle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+        }
+
+        .template-card.open .template-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* Collapsible Content */
+        .template-content {
+            display: none;
+            padding: 0 24px 24px 24px;
+            border-top: 1px solid #fafafa;
+        }
+
+        .template-card.open .template-content {
+            display: block;
+        }
+
+        /* Typography & Structure Inside Cards */
+        .description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+        /* Context Matrix Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .info-card {
+            background: #fafafa;
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+        }
+
+        .info-card h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .info-card ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .info-card li {
+            position: relative;
+            padding-left: 12px;
+            margin-bottom: 4px;
+        }
+
+        .info-card li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--code-bg);
+            color: #e5e5e5;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: #f3f4f6;
+            padding: 2px 4px;
+            border-radius: 4px;
+            color: var(--text-main);
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        .placeholder {
+            color: #fda4af; /* Soft light red/orange placeholder inside code block */
+            font-weight: 500;
+        }
+
+        /* Lists */
+        .styled-list {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .styled-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 6px;
+        }
+
+        .styled-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        /* Metadata Parameters */
+        .meta-footer {
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+
+        .meta-param span {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Instructions Footer Section */
+        .how-to-use {
+            margin-top: 64px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .how-to-use h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .step-list {
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .step-list li {
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .step-list span {
+            color: var(--text-muted);
+            display: block;
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .test-cases {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .test-case {
+            font-size: 0.75rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 20px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 40px 16px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .header-main { flex-direction: column; gap: 4px; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Prompt Library</h1>
+            <p>Production-ready templates with integrated analytical guardrails.</p>
+        </header>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterTemplates('all', this)">All</button>
+            <button class="filter-btn" onclick="filterTemplates('analysis', this)">Analysis</button>
+            <button class="filter-btn" onclick="filterTemplates('classification', this)">Classification</button>
+            <button class="filter-btn" onclick="filterTemplates('generation', this)">Generation</button>
+            <button class="filter-btn" onclick="filterTemplates('safety', this)">Safety</button>
+        </div>
+
+        <div class="template-card open" data-category="analysis">
+            <div class="template-header" onclick="toggleTemplate(this)">
+                <div class="header-main">
+                    <span class="template-title">Template 1 — Structured Summarizer</span>
+                    <span class="template-badge">Analysis</span>
+                </div>
+                <div class="template-toggle">▲</div>
+            </div>
+            <div class="template-content">
+                <p class="description">Summarize long text reliably without hallucinating or drifting.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Use Case</h4>
+                        <ul>
+                            <li>Summarizing documents</li>
+                            <li>Processing tickets & emails</li>
+                            <li>Condensing reports</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h4>Exclusions</h4>
+                        <ul>
+                            <li>Creative rewriting projects</li>
+                            <li>Preserving precise tone matches</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label">System Prompt</div>
+                <pre><code>You are a professional analyst.
+Your task is to summarize the provided text accurately and concisely.
+Use only the information in the input.
+If information is missing or unclear, state that explicitly.
+Do not add external facts.</code></pre>
+
+                <div class="section-label">User Prompt</div>
+                <pre><code>Summarize the following text.
+
+TEXT:
+{INPUT_TEXT}</code></pre>
+
+                <div class="section-label">Output Format</div>
+                <ul class="styled-list">
+                    <li>5 bullet points</li>
+                    <li>Each bullet: exactly one sentence</li>
+                    <li>No extra introductory or closing commentary</li>
+                </ul>
+
+                <div class="section-label">Guardrails & Error States</div>
+                <p class="description" style="margin-bottom: 0;">If text is too short, respond strictly with: <code>"Insufficient content to summarize."</code></p>
+
+                <div class="meta-footer">
+                    <div class="meta-param">Temperature: <span>0.2</span></div>
+                    <div class="meta-param">Max Tokens: <span>Proportional to input</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-card" data-category="analysis">
+            <div class="template-header" onclick="toggleTemplate(this)">
+                <div class="header-main">
+                    <span class="template-title">Template 2 — Information Extractor</span>
+                    <span class="template-badge">Analysis</span>
+                </div>
+                <div class="template-toggle">▼</div>
+            </div>
+            <div class="template-content">
+                <p class="description">Extract specific programmatic data points from unstructured text.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Use Case</h4>
+                        <ul>
+                            <li>Parsing resumes</li>
+                            <li>Extracting invoice data</li>
+                            <li>Processing automated emails & logs</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h4>Exclusions</h4>
+                        <ul>
+                            <li>Context requires subjective interpretation</li>
+                            <li>Field values are inherently ambiguous</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label">System Prompt</div>
+                <pre><code>You are an information extraction engine.
+Extract only the requested fields from the provided text.
+Do not infer or guess missing values.
+Return null for fields that are not present.</code></pre>
+
+                <div class="section-label">User Prompt</div>
+                <pre><code>Extract the following fields from the text below.
+
+FIELDS:
+- <span class="placeholder">{FIELD_1}</span>
+- <span class="placeholder">{FIELD_2}</span>
+- <span class="placeholder">{FIELD_3}</span>
+
+TEXT:
+{INPUT_TEXT}</code></pre>
+
+                <div class="section-label">Output Format</div>
+                <pre><code>{FIELD_1}: value or null
+{FIELD_2}: value or null
+{FIELD_3}: value or null</code></pre>
+
+                <div class="section-label">Guardrails & Error States</div>
+                <p class="description" style="margin-bottom: 0;">Do not invent values — fallback to <code>null</code>. Do not explain results — return raw formatting only.</p>
+
+                <div class="meta-footer">
+                    <div class="meta-param">Temperature: <span>0.0 – 0.2</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-card" data-category="classification">
+            <div class="template-header" onclick="toggleTemplate(this)">
+                <div class="header-main">
+                    <span class="template-title">Template 3 — Classifier</span>
+                    <span class="template-badge">Classification</span>
+                </div>
+                <div class="template-toggle">▼</div>
+            </div>
+            <div class="template-content">
+                <p class="description">Classify input strictly into predefined categories with clean logical justification.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Use Case</h4>
+                        <ul>
+                            <li>Spam & Phishing detection</li>
+                            <li>Sentiment analysis routing</li>
+                            <li>Intent taxonomy mapping</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h4>Exclusions</h4>
+                        <ul>
+                            <li>Deep contextual nuance needed (use NER)</li>
+                            <li>Multi-label outputs are required</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label">System Prompt</div>
+                <pre><code>You are a classification system.
+Classify the input strictly into one of the allowed categories.
+Base your decision only on the provided input.
+If the input does not fit any category, return "Uncertain".</code></pre>
+
+                <div class="section-label">User Prompt</div>
+                <pre><code>Classify the following text.
+
+CATEGORIES:
+- <span class="placeholder">{CATEGORY_1}</span>
+- <span class="placeholder">{CATEGORY_2}</span>
+- <span class="placeholder">{CATEGORY_3}</span>
+
+TEXT:
+{INPUT_TEXT}</code></pre>
+
+                <div class="section-label">Output Format</div>
+                <pre><code>Classification: &lt;one category or Uncertain&gt;
+Reason: &lt;one sentence explanation&gt;</code></pre>
+
+                <div class="section-label">Guardrails & Error States</div>
+                <p class="description" style="margin-bottom: 0;">Enforce single-choice outcomes. Do not allow the generation of unlisted taxonomic classes.</p>
+
+                <div class="meta-footer">
+                    <div class="meta-param">Temperature: <span>0.0 – 0.1</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-card" data-category="generation">
+            <div class="template-header" onclick="toggleTemplate(this)">
+                <div class="header-main">
+                    <span class="template-title">Template 4 — Professional Rewriter</span>
+                    <span class="template-badge">Generation</span>
+                </div>
+                <div class="template-toggle">▼</div>
+            </div>
+            <div class="template-content">
+                <p class="description">Refactor or adjust the stylistic prose of text while preserving exact intent and core concepts.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Use Case</h4>
+                        <ul>
+                            <li>Improving overall tone clarity</li>
+                            <li>Converting informal copy to formal</li>
+                            <li>Condensing verbose text blocks</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h4>Exclusions</h4>
+                        <ul>
+                            <li>Factual data minimization (use Summarizer)</li>
+                            <li>Highly distinct, rigid brand-voice alignments</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label">System Prompt</div>
+                <pre><code>You are a professional editor.
+Rewrite the input text while preserving the original meaning.
+Do not add new information.
+Maintain factual accuracy.</code></pre>
+
+                <div class="section-label">User Prompt</div>
+                <pre><code>Rewrite the following text.
+
+TARGET TONE:
+{TARGET_TONE}
+
+TEXT:
+{INPUT_TEXT}</code></pre>
+
+                <div class="section-label">Output Format</div>
+                <ul class="styled-list">
+                    <li>Output rewritten text exclusively</li>
+                    <li>Omit conversational summaries or explanations</li>
+                </ul>
+
+                <div class="section-label">Guardrails & Error States</div>
+                <p class="description" style="margin-bottom: 0;">Zero injection of outside facts, logical opinions, or external assertions.</p>
+
+                <div class="meta-footer">
+                    <div class="meta-param">Temperature: <span>0.3 – 0.5</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-card" data-category="generation">
+            <div class="template-header" onclick="toggleTemplate(this)">
+                <div class="header-main">
+                    <span class="template-title">Template 5 — Step-by-Step Planner</span>
+                    <span class="template-badge">Generation</span>
+                </div>
+                <div class="template-toggle">▼</div>
+            </div>
+            <div class="template-content">
+                <p class="description">Generate comprehensive, structured workflows paired with analytical risk matrixes.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Use Case</h4>
+                        <ul>
+                            <li>Project sprint mapping</li>
+                            <li>Dynamic technical workflow generation</li>
+                            <li>Operational business process design</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h4>Exclusions</h4>
+                        <ul>
+                            <li>Immediate low-latency quick answers</li>
+                            <li>Unconstrained creative brainstorming sessions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label">System Prompt</div>
+                <pre><code>You are a systems planner.
+Create a clear, step-by-step plan based on the input.
+Identify assumptions and risks explicitly.
+Do not over-optimize or speculate.</code></pre>
+
+                <div class="section-label">User Prompt</div>
+                <pre><code>Create a plan for the following goal.
+
+GOAL:
+{GOAL_DESCRIPTION}
+
+CONSTRAINTS:
+{CONSTRAINTS}</code></pre>
+
+                <div class="section-label">Output Format</div>
+                <pre><code>Steps:
+1. ...
+2. ...
+
+Assumptions:
+- ...
+
+Risks:
+- ...</code></pre>
+
+                <div class="section-label">Guardrails & Error States</div>
+                <p class="description" style="margin-bottom: 0;">Do not plan assuming idealized or infinite resources. Flag information gaps transparently.</p>
+
+                <div class="meta-footer">
+                    <div class="meta-param">Temperature: <span>0.2 – 0.4</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-card" data-category="safety">
+            <div class="template-header" onclick="toggleTemplate(this)">
+                <div class="header-main">
+                    <span class="template-title">Template 6 — Safety-Aware Generator</span>
+                    <span class="template-badge">Safety</span>
+                </div>
+                <div class="template-toggle">▼</div>
+            </div>
+            <div class="template-content">
+                <p class="description">Execute user Q&A interactions while safely minimizing hallucinations and non-grounded outputs.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Use Case</h4>
+                        <ul>
+                            <li>User-facing standard chat applications</li>
+                            <li>Knowledge bases with factual gaps</li>
+                            <li>Automated tier-1 client support routing</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h4>Exclusions</h4>
+                        <ul>
+                            <li>Artistic generation elements</li>
+                            <li>Strictly deterministic data matching pipelines</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label">System Prompt</div>
+                <pre><code>You are a cautious assistant.
+Answer the question using only reliable knowledge.
+If you are not confident, say so explicitly.
+Never guess or fabricate information.</code></pre>
+
+                <div class="section-label">User Prompt</div>
+                <pre><code>Answer the following question.
+
+QUESTION:
+{USER_QUESTION}</code></pre>
+
+                <div class="section-label">Output Format</div>
+                <ul class="styled-list">
+                    <li>Direct response statement</li>
+                    <li>One concise paragraph limit</li>
+                    <li>Explicit disclaimer of uncertainty if confidence criteria drops</li>
+                </ul>
+
+                <div class="section-label">Guardrails & Error States</div>
+                <p class="description" style="margin-bottom: 0;">Prioritize structural refusal ("I do not have access to that information") over algorithmic extrapolation.</p>
+
+                <div class="meta-footer">
+                    <div class="meta-param">Temperature: <span>0.2</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="how-to-use">
+            <h3>Library Governance</h3>
+            <ul class="step-list">
+                <li>1. Extract raw markup block definitions.</li>
+                <li>2. Inject required environmental variables inside the highlighted <code>{PLACEHOLDERS}</code>.</li>
+                <li>3. Benchmark across three required inputs:
+                    <div class="test-cases">
+                        <span class="test-case">Standard Context</span>
+                        <span class="test-case">Boundary/Edge Data</span>
+                        <span class="test-case">Adversarial Input</span>
+                    </div>
+                </li>
+                <li>4. Log functional updates into decoupled system version control repositories.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleTemplate(header) {
+            const card = header.parentElement;
+            const toggleElement = header.querySelector('.template-toggle');
+            
+            card.classList.toggle('open');
+            
+            if (card.classList.contains('open')) {
+                toggleElement.textContent = '▲';
+            } else {
+                toggleElement.textContent = '▼';
+            }
+        }
+
+        function filterTemplates(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const cards = document.querySelectorAll('.template-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
