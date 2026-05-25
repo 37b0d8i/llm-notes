@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Notes</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --tag-bg: #388bfd26;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+    .subtitle { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem; }
+    .search-box { width: 100%; max-width: 600px; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); font-size: 1rem; margin-bottom: 1.5rem; }
+    .category { margin-bottom: 2rem; }
+    .category-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+    .category-icon { font-size: 1.2rem; }
+    .category-name { font-size: 1.1rem; font-weight: 600; }
+    .category-count { font-size: 0.8rem; color: var(--text-muted); background: var(--tag-bg); padding: 0.1rem 0.5rem; border-radius: 12px; }
+    .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.8rem; }
+    .file-card { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-decoration: none; color: var(--text); transition: border-color 0.15s, transform 0.15s; }
+    .file-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .file-name { font-weight: 500; margin-bottom: 0.3rem; word-break: break-all; }
+    .file-meta { font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .file-tag { background: var(--tag-bg); color: var(--accent); padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .no-results { color: var(--text-muted); text-align: center; padding: 2rem; }
+    @media (max-width: 600px) { body { padding: 1rem; } .file-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>📚 LLM Notes</h1>
+  <p class="subtitle">Auto-generated file index — refreshes on every push</p>
+  <input type="text" class="search-box" placeholder="Search files..." id="search" oninput="filterFiles()">
+
+  <div id="content">Loading...</div>
+
+  <script>
+    const CATEGORIES = {
+      '📄 Documents':   ['html', 'htm', 'md', 'txt', 'pdf', 'doc', 'docx'],
+      '🖼️ Images':      ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'ico'],
+      '🎵 Audio':       ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'],
+      '🎬 Video':       ['mp4', 'webm', 'mkv', 'avi', 'mov'],
+      '📦 Data':        ['json', 'yaml', 'yml', 'xml', 'csv', 'tsv'],
+      '🧩 Code':        ['js', 'ts', 'py', 'sh', 'bash', 'css', 'sql'],
+      '🗜️ Archives':    ['zip', 'tar', 'gz', 'rar', '7z'],
+      '📁 Folders':     ['directory'],
+    };
+
+    const ICON_MAP = {
+      'html': '🌐', 'htm': '🌐',
+      'md': '📝', 'txt': '📝',
+      'pdf': '📕',
+      'png': '🖼️', 'jpg': '🖼️', 'jpeg': '🖼️', 'gif': '🖼️', 'svg': '🖼️', 'webp': '🖼️',
+      'mp3': '🎵', 'wav': '🎵', 'ogg': '🎵', 'flac': '🎵', 'aac': '🎵', 'm4a': '🎵',
+      'mp4': '🎬', 'webm': '🎬', 'mkv': '🎬',
+      'json': '📋', 'yaml': '📋', 'yml': '📋', 'xml': '📋',
+      'py': '🐍', 'js': '📜', 'ts': '📜', 'sh': '📜', 'css': '📜',
+      'zip': '🗜️', 'tar': '🗜️', 'gz': '🗜️',
+    };
+
+    function getExt(name) {
+      if (!name || name.endsWith('/')) return 'directory';
+      const parts = name.split('.');
+      return parts.length > 1 ? parts.pop().toLowerCase() : 'txt';
+    }
+
+    function getCategory(ext) {
+      for (const [cat, exts] of Object.entries(CATEGORIES)) {
+        if (exts.includes(ext)) return cat;
+      }
+      return '📄 Documents';
+    }
+
+    function iconFor(name, ext) {
+      return ICON_MAP[ext] || '📄';
+    }
+
+    async function loadIndex() {
+      try {
+        const res = await fetch('index.json');
+        if (!res.ok) throw new Error('index.json not found');
+        const files = await res.json();
+        render(files);
+      } catch {
+        // index.json not generated yet — show a message
+        document.getElementById('content').innerHTML =
+          '<p class="no-results">index.json not found. Push to trigger regeneration.</p>';
+      }
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+      return (bytes/1024/1024).toFixed(1) + ' MB';
+    }
+
+    let allFiles = [];
+
+    function render(files) {
+      allFiles = files;
+      filterFiles();
+    }
+
+    function filterFiles() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const filtered = q
+        ? allFiles.filter(f => f.name.toLowerCase().includes(q))
+        : allFiles;
+
+      if (filtered.length === 0) {
+        document.getElementById('content').innerHTML = '<p class="no-results">No files found</p>';
+        return;
+      }
+
+      // Group by category
+      const byCat = {};
+      for (const f of filtered) {
+        const ext = getExt(f.name);
+        const cat = getCategory(ext);
+        if (!byCat[cat]) byCat[cat] = [];
+        byCat[cat].push({ ...f, ext });
+      }
+
+      let html = '';
+      for (const [cat, catFiles] of Object.entries(byCat)) {
+        const icon = cat.split(' ')[0];
+        html += `<div class="category">
+          <div class="category-header">
+            <span class="category-icon">${icon}</span>
+            <span class="category-name">${cat.replace(/^\S+\s/, '')}</span>
+            <span class="category-count">${catFiles.length}</span>
+          </div>
+          <div class="file-grid">`;
+        for (const f of catFiles.sort((a,b) => a.name.localeCompare(b.name))) {
+          html += `<a class="file-card" href="${f.name}">
+            <div class="file-name">${iconFor(f.name, f.ext)} ${f.name.split('/').pop()}</div>
+            <div class="file-meta">
+              <span class="file-tag">.${f.ext}</span>
+              ${f.size != null ? `<span>${formatSize(f.size)}</span>` : ''}
+            </div>
+          </a>`;
+        }
+        html += `</div></div>`;
+      }
+      document.getElementById('content').innerHTML = html;
+    }
+
+    loadIndex();
+  </script>
+</body>
+</html>
