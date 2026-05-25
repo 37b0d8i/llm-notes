@@ -5,19 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLI-based AI assistant script</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     
     <style>
         :root {
-  --bg: #faf9f7;
-  --surface: #f0ede8;
-  --border: #d4cfc6;
-  --text: #1a1814;
-  --text-muted: #6b6560;
-  --accent: #3d5a80;
-}
+          --bg: #faf9f7;
+          --surface: #f0ede8;
+          --border: #d4cfc6;
+          --text: #1a1814;
+          --text-main: #1a1814;
+          --text-muted: #6b6560;
+          --accent: #3d5a80;
+          --accent-light: #e8e5f0;
+          --code-bg: #1a1a1a;
+          --max-width: 800px;
+          --radius-sm: 6px;
+          --radius-md: 12px;
+        }
 
         * { 
             margin: 0; 
@@ -27,8 +33,8 @@
 
         body {
             font-family: 'Crimson Pro', Georgia, serif;
-            background: var(--light);
-            color: var(--dark);
+            background-color: var(--bg);
+            color: var(--text-main);
             line-height: 1.75;
             padding: 80px 24px;
             -webkit-font-smoothing: antialiased;
