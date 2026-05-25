@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strong Prompt Example - Same Task, Engineered</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #141413;
+      --light: #faf9f5;
+      --text-muted: #6b6a65;
+      --border-color: #e3e1d5;
+      --card-border: #e8e6db; /* Slightly visible container definition */
+      
+      /* Refined Minimalist Palette Accents */
+      --orange: #cc6643;
+      --blue: #5885b3;
+      --green: #63754b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 80px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* --- Minimalist Header --- */
+    header {
+      margin-bottom: 64px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 300; 
+      letter-spacing: -0.04em;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 1.15rem;
+    }
+
+    /* --- Content Layout --- */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .cards-row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: calc(66.66% + 16px);
+    }
+
+    /* --- Refined Card Architecture --- */
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 5px; /* Slight modern rounded corner */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      padding: 24px;
+    }
+
+    /* Elegant vertical thin accent line indicator inside card */
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 24px;
+      width: 2px;
+      height: 40px;
+    }
+    .card.accent-orange::before { background: var(--orange); }
+    .card.accent-blue::before { background: var(--blue); }
+    .card.accent-green::before { background: var(--green); }
+
+    .card-content {
+      padding-left: 12px; /* Offset to clear the accent line indicator */
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 400; 
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: var(--orange);
+    }
+
+    /* --- Sample Layouts --- */
+    .example {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.95rem;
+      color: var(--dark);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    /* Thin understated divider line between items */
+    .example::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--border-color);
+      margin-top: 12px;
+    }
+
+    .example:last-child {
+      margin-bottom: 0;
+    }
+
+    .example:last-child::after {
+      display: none;
+    }
+
+    /* --- Footer Typography Block --- */
+    .footer {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding-top: 32px;
+      margin-top: 64px;
+      font-size: 1.1rem;
+    }
+
+    .footer strong {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-style: normal;
+      color: var(--orange);
+      letter-spacing: -0.01em;
+    }
+
+    /* --- Responsive Breakpoints --- */
+    @media (max-width: 900px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      .cards-row-2 {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 48px 20px; }
+      header { margin-bottom: 40px; }
+      h1 { font-size: 2rem; }
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Strong Prompt Example</h1>
+      <p class="subtitle">Same Task, Engineered.</p>
+    </header>
+
+    <div class="cards-grid">
+      <div class="card accent-orange">
+        <div class="card-content">
+          <h2 class="card-title">Clear Role</h2>
+          <div class="example">"You are a technical summarizer"</div>
+          <div class="example">"Act as a senior software architect"</div>
+          <div class="example">"You are a friendly customer support agent"</div>
+        </div>
+      </div>
+
+      <div class="card accent-blue">
+        <div class="card-content">
+          <h2 class="card-title">Defined Task</h2>
+          <div class="example">"Extract key points from documents"</div>
+          <div class="example">"Debug the code and suggest fixes"</div>
+          <div class="example">"Write engaging social media captions"</div>
+        </div>
+      </div>
+
+      <div class="card accent-green">
+        <div class="card-content">
+          <h2 class="card-title">Output Structure</h2>
+          <div class="example">"Provide 3-5 bullet points, max 20 words each"</div>
+          <div class="example">"Format as JSON with fields: title, body, tags"</div>
+          <div class="example">"Return a table with columns: date, amount, category"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards-row-2">
+      <div class="card accent-orange">
+        <div class="card-content">
+          <h2 class="card-title">Constraints</h2>
+          <div class="example">"Use only information from the document"</div>
+          <div class="example">"Do not include any placeholders or lorem ipsum"</div>
+          <div class="example">"Avoid technical jargon unless explained"</div>
+        </div>
+      </div>
+
+      <div class="card accent-blue">
+        <div class="card-content">
+          <h2 class="card-title">Failure Handling</h2>
+          <div class="example">"If document is unclear, state what's missing"</div>
+          <div class="example">"If unsure, say 'I don't know' rather than guess"</div>
+          <div class="example">"Flag any assumptions with a [?] marker"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      This is <strong>prompt engineering</strong>, not just rewriting.
+    </div>
+  </div>
+</body>
+</html>

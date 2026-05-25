@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hands-On Lab: Build a simple text-in → text-out app</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #171717;
+            --text-muted: #666666;
+            --accent-color: #000000;
+            --border-color: #e5e5e5;
+            --code-inline-bg: #fafafa;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.75;
+            margin: 0;
+            padding: 80px 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        /* --- Minimalist Thinner Headers --- */
+        h1.article-title {
+            font-size: 2.5em;
+            font-weight: 300;
+            letter-spacing: -0.04em;
+            color: var(--accent-color);
+            margin-bottom: 50px;
+            line-height: 1.2;
+        }
+
+        .content h2 {
+            font-size: 1.6em;
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            margin-top: 60px;
+            margin-bottom: 24px;
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .content h3 {
+            font-weight: 400;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .content p {
+            margin-bottom: 24px;
+            font-weight: 400;
+            color: #262626;
+        }
+
+        /* --- Links --- */
+        a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: opacity 0.2s;
+        }
+        a:hover {
+            opacity: 0.6;
+        }
+
+        /* --- Code Blocks (Overriding Prism defaults for minimalism) --- */
+        pre[class*="language-"] {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+            border: 1px solid var(--border-color);
+            background: #1e1e1e !important; /* Elegant dark depth */
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88em;
+        }
+        code[class*="language-"] {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: inherit;
+            text-shadow: none !important;
+        }
+        
+        /* Inline code styling */
+        :not(pre) > code {
+            background: var(--code-inline-bg) !important;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82em !important;
+            color: #171717 !important;
+            border: 1px solid var(--border-color);
+            text-shadow: none !important;
+        }
+
+        /* --- Lists & Quotes --- */
+        ul, ol {
+            margin-bottom: 24px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        blockquote {
+            border-left: 1px solid var(--accent-color);
+            margin: 32px 0;
+            padding: 4px 0 4px 20px;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 40px 20px; }
+            h1.article-title { font-size: 2em; }
+            .content h2 { font-size: 1.4em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="article-title">Simple Build a simple text-in → text-out Typescript codes</h1>
+        <div class="content">
+            <h2>LLM API + CLI Typescript codes</h2>
+            
+            <h3>Prerequisites</h3>
+            <ul>
+                <li>repo exists locally and on GitHub</li>
+                <li><a href="https://bun.sh" target="_blank">Bun runtime</a> installed on your machine</li>
+                <li>You have an API key from your chosen LLM provider</li>
+            </ul>
+
+            <h2>Part A — Prepare the project</h2>
+            
+            <h3>Step 1: Navigate to project root</h3>
+            <pre><code class="language-bash">cd ts-ai-systems</code></pre>
+            <p>Since Bun natively supports TypeScript and uses isolated global runtimes, you do not need to create or activate a traditional Python virtual environment.</p>
+
+            <h3>Step 2: Initialize project and install dependencies</h3>
+            <p>Initialize a fresh Bun project structure if you haven't already:</p>
+            <pre><code class="language-bash">bun init -y</code></pre>
+            
+            <p>You will need the official OpenAI community or vendor SDK. Bun reads environment variables natively from <code>.env</code> files out of the box:</p>
+            <pre><code class="language-bash">bun add openai</code></pre>
+
+            <h3>Step 3: Create an environment file for secrets</h3>
+            <p>In the project root, create a file named <code>.env</code> and add:</p>
+            <pre><code class="language-env">OPENAI_API_KEY=your_api_key_here</code></pre>
+            <p>Confirm <code>.env</code> is in your <code>.gitignore</code> file. If not, add it:</p>
+            <pre><code class="language-gitignore">.env
+node_modules/</code></pre>
+            <blockquote>Never commit your <code>.env</code> file.</blockquote>
+
+            <h2>Part B — Call an LLM API from TypeScript</h2>
+            
+            <h3>Step 4: Create a new script file</h3>
+            <p>Create the scripts target directory and file:</p>
+            <pre><code class="language-bash">mkdir -p scripts
+touch scripts/cli_assistant.ts</code></pre>
+
+            <h3>Step 5: Paste this code (LLM API call + CLI loop)</h3>
+            <p>Open <code>scripts/cli_assistant.ts</code> and add the following codebase:</p>
+<pre><code class="language-typescript">import OpenAI from "openai";
+import readline from "readline";
+
+// Bun natively injects process.env from your .env file
+const apiKey = Bun.env.OPENAI_API_KEY;
+
+if (!apiKey) {
+  console.error("Error: Missing OPENAI_API_KEY. Put it in a .env file.");
+  process.exit(1);
+}
+
+const client = new OpenAI({ apiKey });
+
+function buildMessages(userText: string) {
+  return [
+    {
+      role: "system" as const,
+      content: "You are a helpful assistant. Be concise, correct, and do not invent facts. If unsure, say you are unsure."
+    },
+    { 
+      role: "user" as const, 
+      content: userText 
+    }
+  ];
+}
+
+async function callLlm(userText: string): Promise&lt;string&gt; {
+  const messages = buildMessages(userText);
+
+  const resp = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: messages,
+    temperature: 0.2,
+    max_tokens: 300,
+  });
+
+  return resp.choices[0].message.content?.trim() || "";
+}
+
+async function main() {
+  console.log("CLI AI Assistant (type 'exit' or 'quit' to quit)");
+
+  // Setup readable stream reader interface for terminal IO
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const askQuestion = () => {
+    rl.question("\nYou: ", async (input) => {
+      const userText = input.trim();
+
+      if (userText.toLowerCase() === "exit" || userText.toLowerCase() === "quit") {
+        console.log("Goodbye.");
+        rl.close();
+        process.exit(0);
+      }
+
+      if (!userText) {
+        console.log("Please enter a question.");
+        askQuestion();
+        return;
+      }
+
+      try {
+        const answer = await callLlm(userText);
+        console.log("\nAssistant:", answer);
+      } catch (e: any) {
+        console.error("\nError calling the LLM API:", e.message || e);
+      }
+
+      askQuestion(); // Core interface loop recursion
+    });
+  };
+
+  askQuestion();
+}
+
+main();</code></pre>
+
+            <p>Notes:</p>
+            <ul>
+                <li>Uses TypeScript structural types and native asynchronous promises.</li>
+                <li>Uses Bun's built-in <code>Bun.env</code> utility directly.</li>
+                <li>Low temperature setting for consistent deterministic response validation.</li>
+            </ul>
+
+            <h3>Step 6: Run the script</h3>
+            <p>Execute the script immediately via Bun runtime without manual compilation phases:</p>
+            <pre><code class="language-bash">bun run scripts/cli_assistant.ts</code></pre>
+            
+            <p>Try prompts like:</p>
+            <ul>
+                <li>“Explain tokens in one paragraph.”</li>
+                <li>“Rewrite this sentence more formally: …”</li>
+                <li>“Give me a 3-bullet summary of: …”</li>
+            </ul>
+
+            <h2>Part C — Make it a clean deliverable</h2>
+            
+            <h3>Step 7: Update README with run instructions</h3>
+            <p>Add this section to <code>README.md</code>:</p>
+<pre><code class="language-markdown">## Day 3: CLI Assistant
+
+Create a `.env` file in the project root:
+OPENAI_API_KEY=your_key_here
+
+Install dependencies:
+bun install
+
+Run the runtime engine:
+bun run scripts/cli_assistant.ts</code></pre>
+
+            <h3>Step 8: Commit and push to GitHub</h3>
+            <pre><code class="language-bash">git add .
+git commit -m "Day 3: add TypeScript CLI assistant using Bun runtime"
+git push</code></pre>
+
+            <h2>Final Verification Checklist</h2>
+            <p>You are done when:</p>
+            <ul>
+                <li><code>.env</code> exists locally and is omitted from public branches</li>
+                <li><code>bun run scripts/cli_assistant.ts</code> processes runtime pipelines smoothly</li>
+                <li>Repo on GitHub securely references:
+                    <ul>
+                        <li><code>scripts/cli_assistant.ts</code></li>
+                        <li><code>package.json</code> / <code>bun.lockb</code></li>
+                        <li>updated <code>README.md</code></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Troubleshooting</h2>
+            <ul>
+                <li><strong>"Missing OPENAI_API_KEY"</strong><br>Ensure your local <code>.env</code> file rests in the absolute execution root of the project directory.</li>
+                <li><strong>"Command not found: bun"</strong><br>Ensure your global shell environments possess local environment binary context mappings for Bun paths.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

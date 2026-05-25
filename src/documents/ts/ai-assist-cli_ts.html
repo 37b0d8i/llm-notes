@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLI-based AI assistant script</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    
+    <style>
+        :root {
+            --dark: #141413;
+            --light: #faf9f5;
+            --text-muted: #6b6a65;
+            --border-color: #e3e1d5;
+            --card-border: #e8e6db;
+            --card-bg: #ffffff;
+            --orange: #cc6643;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.75;
+            padding: 80px 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        /* --- Minimalist Editorial Header --- */
+        header {
+            margin-bottom: 56px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 24px;
+        }
+
+        h1.article-title {
+            font-size: 2.4rem;
+            font-weight: 300; /* Thinner weight preference */
+            letter-spacing: -0.04em;
+            line-height: 1.25;
+            color: var(--dark);
+        }
+
+        /* --- Content Layout Typography --- */
+        .content h2, .content h4 {
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            margin-top: 50px;
+            margin-bottom: 16px;
+            color: var(--dark);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        
+        .content h3 {
+            font-weight: 400;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.05rem;
+            color: var(--dark);
+        }
+
+        .file-meta {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.9rem !important;
+            color: var(--text-muted);
+            margin-top: -8px;
+            margin-bottom: 24px;
+        }
+
+        /* --- Links --- */
+        a {
+            color: var(--dark);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: opacity 0.2s;
+        }
+        a:hover {
+            opacity: 0.6;
+        }
+
+        /* --- Code Blocks (Prism Overrides) --- */
+        pre[class*="language-"] {
+            padding: 20px;
+            border-radius: 4px; /* Slight rounded corner */
+            margin: 24px 0;
+            border: 1px solid var(--card-border);
+            background: #1e1e1e !important;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+        }
+        code[class*="language-"] {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: inherit;
+            text-shadow: none !important;
+        }
+        
+        /* Inline code styling */
+        :not(pre) > code {
+            background: var(--card-bg) !important;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em !important;
+            color: var(--dark) !important;
+            border: 1px solid var(--card-border);
+            text-shadow: none !important;
+        }
+
+        /* --- Lists & Blocks --- */
+        ul, ol {
+            margin-bottom: 24px;
+            padding-left: 20px;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.05rem;
+        }
+        li {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        blockquote {
+            border-left: 1px solid var(--dark);
+            margin: 32px 0;
+            padding: 4px 0 4px 20px;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 48px 20px; }
+            h1.article-title { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="article-title">CLI-based AI assistant using Typescript</h1>
+        </header>
+        
+        <div class="content">
+            <p class="file-meta"><strong>File:</strong> <code>scripts/cli_assistant.ts</code></p>
+
+<pre><code class="language-typescript">import OpenAI from "openai";
+import readline from "readline";
+
+// Bun natively injects parameters from your local .env file
+const apiKey = Bun.env.OPENAI_API_KEY;
+
+if (!apiKey) {
+  console.error("Error: Missing OPENAI_API_KEY. Put it in a .env file.");
+  process.exit(1);
+}
+
+const client = new OpenAI({ apiKey });
+
+/**
+ * Builds a structured message payload for the LLM.
+ * Separates system instructions from user input.
+ */
+function buildMessages(userInput: string) {
+  return [
+    {
+      role: "system" as const,
+      content: "You are a helpful AI assistant. Be concise, accurate, and clear. If you are unsure, say you are unsure."
+    },
+    {
+      role: "user" as const,
+      content: userInput
+    }
+  ];
+}
+
+/**
+ * Sends a request to the LLM API and returns the text output.
+ */
+async function callLlm(userInput: string): Promise&lt;string&gt; {
+  const messages = buildMessages(userInput);
+
+  const response = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: messages,
+    temperature: 0.2,
+    max_tokens: 300,
+  });
+
+  return response.choices[0].message.content?.trim() || "";
+}
+
+async function main() {
+  console.log("CLI AI Assistant");
+  console.log("Type 'exit' or 'quit' to end the session.\n");
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const askQuestion = () => {
+    rl.question("You: ", async (input) => {
+      const userInput = input.trim();
+
+      if (userInput.toLowerCase() === "exit" || userInput.toLowerCase() === "quit") {
+        console.log("Goodbye.");
+        rl.close();
+        process.exit(0);
+      }
+
+      if (!userInput) {
+        console.log("Please enter a prompt.");
+        askQuestion();
+        return;
+      }
+
+      try {
+        const answer = await callLlm(userInput);
+        console.log(`\nAssistant: ${answer}\n`);
+      } catch (e: any) {
+        console.error("\nError calling the AI model:");
+        console.error(e.message || e, "\n");
+      }
+
+      askQuestion();
+    });
+  };
+
+  askQuestion();
+}
+
+main();</code></pre>
+
+            <h2>Required Supporting Files</h2>
+            
+            <h3><code>.env</code> (DO NOT COMMIT)</h3>
+            <pre><code class="language-env">OPENAI_API_KEY=your_api_key_here</code></pre>
+            <p>Make sure <code>.env</code> and your local dependencies directory are listed in <code>.gitignore</code>:</p>
+            <pre><code class="language-gitignore">.env
+node_modules/</code></pre>
+
+            <h3><code>package.json</code></h3>
+            <p>Dependencies managed seamlessly inside Bun's runtime ecosystem:</p>
+            <pre><code class="language-json">{
+  "name": "bun-ai-cli",
+  "version": "1.0.0",
+  "dependencies": {
+    "openai": "^4.0.0"
+  }
+}</code></pre>
+
+            <h2>How to Run</h2>
+            <p>Initialize project packages and launch the script immediately from the project root using Bun:</p>
+            <pre><code class="language-bash">bun install
+bun run scripts/cli_assistant.ts</code></pre>
+
+            <p>Example interaction:</p>
+            <pre><code class="language-text">You: Explain tokens in simple terms
+Assistant: Tokens are chunks of text that language models read and generate...</code></pre>
+
+            <h2>Why This Script Is Important</h2>
+            <p>This script demonstrates:</p>
+            <ul>
+                <li>Programmatic asynchronous connection to an LLM</li>
+                <li>Secure environmental context key handling</li>
+                <li>Prompt structure discipline</li>
+                <li>The core input → model → output lifecycle engineering</li>
+            </ul>
+            
+            <p>This exact design system loop pattern applies universally to:</p>
+            <ul>
+                <li>Prompt engineering strategies</li>
+                <li>Structured strict JSON outputs</li>
+                <li>Autonomous AI Agents</li>
+                <li>Tool calling execution fabrics</li>
+                <li>Complex multi-agent workflows</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>
