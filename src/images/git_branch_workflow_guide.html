@@ -1,0 +1,218 @@
+<div style="padding: 2rem 0; font-family: var(--font-sans); color: var(--color-text-primary); max-width: 100%;">
+  
+  <div style="margin-bottom: 3rem;">
+    <h1 style="font-size: 28px; font-weight: 500; margin: 0 0 12px 0;">Git branch workflow</h1>
+    <p style="font-size: 15px; color: var(--color-text-secondary); margin: 0; line-height: 1.6;">The pattern that keeps your code stable and team productive. Main stays safe. Features stay isolated. Changes get reviewed.</p>
+  </div>
+
+  <svg width="100%" viewBox="0 0 680 520" role="img" style="margin-bottom: 2rem;">
+    <title>Git branch workflow: main, feature branches, pull requests, merge</title>
+    <desc>Visual workflow showing how main branch serves as source of truth, feature branches branch off for work, pull requests provide review gates, and merges bring changes back to main.</desc>
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <g>
+      <text style="font-size: 14px; font-weight: 500; color: var(--color-text-primary);" x="50" y="50" text-anchor="end">main</text>
+      <text style="font-size: 12px; color: var(--color-text-secondary);" x="50" y="68" text-anchor="end">production</text>
+    </g>
+    <g style="fill: #1D9E75; stroke: #0F6E56; stroke-width: 0.5;">
+      <circle cx="120" cy="50" r="6"/>
+      <circle cx="200" cy="50" r="6"/>
+      <circle cx="280" cy="50" r="6"/>
+      <circle cx="360" cy="50" r="6"/>
+      <circle cx="440" cy="50" r="6"/>
+      <circle cx="520" cy="50" r="6"/>
+      <circle cx="600" cy="50" r="6"/>
+    </g>
+    <line x1="110" y1="50" x2="610" y2="50" stroke="var(--color-border-secondary)" stroke-width="2"/>
+    <g>
+      <text style="font-size: 14px; font-weight: 500; color: var(--color-text-primary);" x="50" y="180" text-anchor="end">feature/auth</text>
+      <text style="font-size: 12px; color: var(--color-text-secondary);" x="50" y="198" text-anchor="end">your work</text>
+      <path d="M200 50 L200 170" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none"/>
+      <g style="fill: #5DCAA5; stroke: #0F6E56; stroke-width: 0.5;">
+        <circle cx="200" cy="180" r="6"/>
+        <circle cx="260" cy="180" r="6"/>
+        <circle cx="320" cy="180" r="6"/>
+      </g>
+      <line x1="200" y1="180" x2="320" y2="180" stroke="var(--color-border-secondary)" stroke-width="2"/>
+    </g>
+    <g>
+      <text style="font-size: 14px; font-weight: 500; color: var(--color-text-primary);" x="50" y="310" text-anchor="end">feature/payments</text>
+      <text style="font-size: 12px; color: var(--color-text-secondary);" x="50" y="328" text-anchor="end">parallel work</text>
+      <path d="M200 50 L200 300" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none"/>
+      <g style="fill: #5DCAA5; stroke: #0F6E56; stroke-width: 0.5;">
+        <circle cx="200" cy="310" r="6"/>
+        <circle cx="270" cy="310" r="6"/>
+      </g>
+      <line x1="200" y1="310" x2="270" y2="310" stroke="var(--color-border-secondary)" stroke-width="2"/>
+    </g>
+    <g>
+      <text style="font-size: 14px; font-weight: 500; color: var(--color-text-primary);" x="50" y="440" text-anchor="end">pull requests</text>
+      <text style="font-size: 12px; color: var(--color-text-secondary);" x="50" y="458" text-anchor="end">code review</text>
+    </g>
+    <g style="cursor: pointer; fill: #EF9F27; stroke: #854F0B; stroke-width: 0.5;">
+      <rect x="100" y="410" width="140" height="50" rx="6"/>
+      <text style="font-size: 14px; font-weight: 500; color: #501313;" x="170" y="432" text-anchor="middle">PR #42</text>
+      <text style="font-size: 12px; color: #501313;" x="170" y="448" text-anchor="middle">feature/auth</text>
+    </g>
+    <g style="cursor: pointer; fill: #EF9F27; stroke: #854F0B; stroke-width: 0.5;">
+      <rect x="280" y="410" width="140" height="50" rx="6"/>
+      <text style="font-size: 14px; font-weight: 500; color: #501313;" x="350" y="432" text-anchor="middle">PR #43</text>
+      <text style="font-size: 12px; color: #501313;" x="350" y="448" text-anchor="middle">feature/payments</text>
+    </g>
+    <path d="M320 174 L170 410" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <path d="M270 304 L350 410" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <path d="M170 410 Q170 240 300 50" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <path d="M350 410 Q350 240 480 50" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <text style="font-size: 12px; color: var(--color-text-secondary);" x="340" y="390" text-anchor="middle">reviewed</text>
+    <text style="font-size: 12px; color: var(--color-text-secondary);" x="200" y="280" text-anchor="middle">✓ approved</text>
+    <text style="font-size: 12px; color: var(--color-text-secondary);" x="380" y="220" text-anchor="middle">✓ approved</text>
+  </svg>
+
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+    <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 12px 0;">Core principle</h2>
+    <p style="font-size: 14px; color: var(--color-text-secondary); margin: 0; line-height: 1.7;"><strong style="color: var(--color-text-primary);">Main stays stable.</strong> Feature branches are isolated. PRs enforce review. This pattern keeps your code safe and your team productive.</p>
+  </div>
+
+  <div style="margin-bottom: 2.5rem;">
+    <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 16px 0;">The four phases</h2>
+    
+    <div onclick="toggleSection('phase1')" style="cursor: pointer; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 12px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 32px; height: 32px; background: var(--color-background-info); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 14px; color: var(--color-text-info);">1</div>
+          <h3 style="font-size: 15px; font-weight: 500; margin: 0;">Main is sacred</h3>
+        </div>
+        <i class="ti ti-chevron-down" id="icon1" style="font-size: 18px; color: var(--color-text-secondary); transition: transform 0.2s;"></i>
+      </div>
+      <div id="section1" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary);">
+        <p style="font-size: 13px; margin: 0 0 10px 0; line-height: 1.6;">The <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">main</code> branch is your source of truth. It's production-ready code that's been reviewed and tested. Never commit directly to main — protect it so only merged PRs can update it.</p>
+        <p style="font-size: 13px; margin: 0; color: var(--color-text-secondary);">This gives you confidence that <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">main</code> is always stable and deployable.</p>
+      </div>
+    </div>
+
+    <div onclick="toggleSection('phase2')" style="cursor: pointer; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 12px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 32px; height: 32px; background: var(--color-background-info); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 14px; color: var(--color-text-info);">2</div>
+          <h3 style="font-size: 15px; font-weight: 500; margin: 0;">Feature branches = isolation</h3>
+        </div>
+        <i class="ti ti-chevron-down" id="icon2" style="font-size: 18px; color: var(--color-text-secondary); transition: transform 0.2s;"></i>
+      </div>
+      <div id="section2" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary);">
+        <p style="font-size: 13px; margin: 0 0 10px 0; line-height: 1.6;">When you start work, create a feature branch off main:</p>
+        <div style="background: var(--color-background-secondary); border-radius: 4px; padding: 10px; font-family: var(--font-mono); font-size: 12px; margin-bottom: 10px; line-height: 1.6;">
+          <div>$ git checkout main</div>
+          <div>$ git pull origin main</div>
+          <div>$ git checkout -b feature/auth</div>
+        </div>
+        <p style="font-size: 13px; margin: 0 0 10px 0; line-height: 1.6;">You work here and make commits. Meanwhile, team members work on their own branches (<code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">feature/payments</code>, <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">feature/dashboard</code>) — all in parallel without stepping on each other's toes.</p>
+        <p style="font-size: 13px; margin: 0; color: var(--color-text-secondary);"><strong style="color: var(--color-text-primary);">Key point:</strong> Feature branches are your sandbox. Make as many commits as you want. Rewrite history if you need to. It doesn't matter because it's not shared yet.</p>
+      </div>
+    </div>
+
+    <div onclick="toggleSection('phase3')" style="cursor: pointer; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 12px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 32px; height: 32px; background: var(--color-background-info); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 14px; color: var(--color-text-info);">3</div>
+          <h3 style="font-size: 15px; font-weight: 500; margin: 0;">Pull requests = review gate</h3>
+        </div>
+        <i class="ti ti-chevron-down" id="icon3" style="font-size: 18px; color: var(--color-text-secondary); transition: transform 0.2s;"></i>
+      </div>
+      <div id="section3" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary);">
+        <p style="font-size: 13px; margin: 0 0 10px 0; line-height: 1.6;">When your feature is ready, open a PR. This is <strong>not</strong> a merge yet — it's a proposal:</p>
+        <ol style="font-size: 13px; margin: 0 0 10px 0; padding-left: 20px; line-height: 1.8;">
+          <li>Open PR from <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">feature/auth</code> → <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">main</code></li>
+          <li>Team reads, tests, and requests changes</li>
+          <li>You update your feature branch (just <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">git push</code> — PR auto-updates)</li>
+          <li>When approved: click merge and your commits fold into main</li>
+        </ol>
+        <p style="font-size: 13px; margin: 0 0 10px 0; line-height: 1.6;"><strong style="color: var(--color-text-primary);">Why PRs matter:</strong></p>
+        <ul style="font-size: 13px; margin: 0; padding-left: 20px; line-height: 1.8;">
+          <li>Catches bugs before production</li>
+          <li>Shares knowledge across the team</li>
+          <li>Enforces a standard (every line reviewed by at least two pairs of eyes)</li>
+          <li>Creates a paper trail (the PR documents why decisions were made)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div onclick="toggleSection('phase4')" style="cursor: pointer; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 32px; height: 32px; background: var(--color-background-info); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 14px; color: var(--color-text-info);">4</div>
+          <h3 style="font-size: 15px; font-weight: 500; margin: 0;">Merge back to main</h3>
+        </div>
+        <i class="ti ti-chevron-down" id="icon4" style="font-size: 18px; color: var(--color-text-secondary); transition: transform 0.2s;"></i>
+      </div>
+      <div id="section4" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary);">
+        <p style="font-size: 13px; margin: 0 0 10px 0; line-height: 1.6;">When approved, the PR merges. Git replays your feature commits on top of main's current state:</p>
+        <div style="background: var(--color-background-secondary); border-radius: 4px; padding: 10px; font-family: var(--font-mono); font-size: 12px; margin-bottom: 10px;">
+          main: c1 -- c2 -- c3 -- (merge: feature/auth commits)
+        </div>
+        <p style="font-size: 13px; margin: 0; color: var(--color-text-secondary);">Your feature branch can now be deleted — it's served its purpose. The commits are permanently recorded in main's history.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+    <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 16px 0;">Real example: three-day feature</h2>
+    <div style="font-family: var(--font-mono); font-size: 13px; line-height: 1.8; color: var(--color-text-secondary);">
+      <div style="margin-bottom: 12px;">
+        <span style="color: var(--color-text-primary);">Day 1: Start auth feature</span>
+      </div>
+      <div style="padding-left: 16px; margin-bottom: 12px; border-left: 2px solid var(--color-border-secondary);">
+        <div>$ git checkout -b feature/auth</div>
+        <div>$ git add login.js</div>
+        <div>$ git commit -m "add login form"</div>
+        <div style="margin-top: 6px;">$ git add auth-service.js</div>
+        <div>$ git commit -m "add authentication service"</div>
+        <div>$ git push origin feature/auth</div>
+      </div>
+
+      <div style="margin-bottom: 12px;">
+        <span style="color: var(--color-text-primary);">Day 2: Open PR, get feedback</span>
+      </div>
+      <div style="padding-left: 16px; margin-bottom: 12px; border-left: 2px solid var(--color-border-secondary);">
+        <div style="color: var(--color-text-secondary);">→ GitHub opens PR, team reviews</div>
+        <div style="color: var(--color-text-secondary); margin-top: 6px;">→ You make changes based on feedback</div>
+        <div style="margin-top: 6px;">$ git add error-handling.js</div>
+        <div>$ git commit -m "add error handling"</div>
+        <div>$ git push origin feature/auth  # PR auto-updates</div>
+      </div>
+
+      <div style="margin-bottom: 12px;">
+        <span style="color: var(--color-text-primary);">Day 3: Approved &amp; merged</span>
+      </div>
+      <div style="padding-left: 16px; border-left: 2px solid var(--color-border-secondary);">
+        <div style="color: var(--color-text-secondary);">→ PR merges automatically</div>
+        <div style="color: var(--color-text-secondary); margin-top: 6px;">→ Your commits now on main</div>
+        <div style="color: var(--color-text-secondary); margin-top: 6px;">→ Delete feature/auth (cleanup)</div>
+      </div>
+    </div>
+    <p style="font-size: 12px; color: var(--color-text-secondary); margin: 16px 0 0 0;"><i class="ti ti-bulb" style="font-size: 14px; vertical-align: -2px; margin-right: 6px;" aria-hidden="true"></i>From day 1 to day 3, <code style="background: var(--color-background-primary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">main</code> was untouched. Other team members shipped their own features on separate branches. When your PR merged, it became part of <code style="background: var(--color-background-primary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">main</code>'s history.</p>
+  </div>
+
+  <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem;">
+    <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 14px 0;">Why this pattern works</h2>
+    <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.9; color: var(--color-text-secondary);">
+      <li style="margin-bottom: 10px;"><strong style="color: var(--color-text-primary);">Stability:</strong> <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">main</code> always works. Hotfixes, deploys, and rollbacks are safe.</li>
+      <li style="margin-bottom: 10px;"><strong style="color: var(--color-text-primary);">Parallelism:</strong> Two people on auth and payments simultaneously. No merge conflicts because they're on separate branches.</li>
+      <li style="margin-bottom: 10px;"><strong style="color: var(--color-text-primary);">Clarity:</strong> PR history is your project diary. Why does this code exist? The PR answer is there.</li>
+      <li><strong style="color: var(--color-text-primary);">Safety:</strong> You can reset or rewrite your feature branch without affecting <code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">main</code>. Only reviewed code matters.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+function toggleSection(id) {
+  const section = document.getElementById('section' + id.slice(-1));
+  const icon = document.getElementById('icon' + id.slice(-1));
+  const isHidden = section.style.display === 'none';
+  
+  section.style.display = isHidden ? 'block' : 'none';
+  icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+</script>
