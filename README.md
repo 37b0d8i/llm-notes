@@ -120,6 +120,7 @@ https://github.com/37b0d8i/llm-notes/actions → "Generate Index" → Run workfl
 |---|---|---|
 | **Hosting** | GitHub Pages | Serves static files, HTTPS, CDN |
 | **CI/CD** | GitHub Actions | Runs indexer on every push |
+| **Validation** | GitHub Actions | Fails PRs if `index.json` is stale |
 | **Indexer** | Node.js 20 (ESM `.mjs`) | Walks repo, emits `index.json` — no build step |
 | **Frontend** | Vanilla HTML/CSS/JS | Dark-themed, search, category grouping |
 | **Auth (push)** | Git SSH | `git@github.com:` for git operations |
@@ -139,5 +140,6 @@ The indexer has zero npm dependencies. Adding one would require `npm install` in
 
 - **Virtual categorisation**: files live in `src/<category>/` but the URL path is preserved in `index.json` so links always point to the correct location
 - **`index.json` committed back to repo**: ensures the source of truth is version-controlled alongside the files; page is rebuildable from any commit
+- **PR validation**: `validate-index.yml` regenerates the manifest into a temp file and fails if the committed `index.json` is out of date
 - **Client-side search**: no server needed — `index.html` fetches `index.json` and filters in-browser; fast for repos up to a few thousand files
 - **Dark theme**: GitHub-dark palette for low-eye-strain browsing of code/doc resources

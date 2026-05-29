@@ -2,12 +2,17 @@
 /** Generate index.json — file listing with sizes, by category. */
 
 import { writeFileSync, readdirSync, statSync } from "fs";
-import { join, relative, extname } from "path";
+import { join, extname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const REPO_ROOT = join(__dirname, "../..");
-const OUT_FILE = join(REPO_ROOT, "index.json");
+const DEFAULT_OUT_FILE = join(REPO_ROOT, "index.json");
+
+const outFlagIndex = process.argv.indexOf("--out");
+const OUT_FILE = outFlagIndex >= 0 && process.argv[outFlagIndex + 1]
+  ? process.argv[outFlagIndex + 1]
+  : DEFAULT_OUT_FILE;
 
 const IGNORE = new Set([
   ".git",
@@ -22,22 +27,18 @@ const IGNORE = new Set([
   "node_modules",
 ]);
 
-const CATEGORIES = {
-  documents: ["html", "htm", "md", "txt", "pdf", "doc", "docx"],
-  images: ["png", "jpg", "jpeg", "gif", "svg", "webp", "ico"],
-  audio: ["mp3", "wav", "ogg", "flac", "aac", "m4a"],
-  video: ["mp4", "webm", "mkv", "avi", "mov"],
-  data: ["json", "yaml", "yml", "xml", "csv", "tsv"],
-  code: ["js", "ts", "py", "sh", "bash", "css", "sql"],
-  archives: ["zip", "tar", "gz", "rar", "7z"],
-};
-
-/** @returns {string} */
-function getCategory(ext) {
-  for (const [cat, exts] of Object.entries(CATEGORIES)) {
-    if (exts.includes(ext)) return cat;
+/**
+ * Keep folder-based categories stable:
+ * - src/documents/<group>/file.html -> <group>
+ * - src/images/file.png -> images
+ */
+function inferCategory(relPath) {
+  const parts = relPath.split("/");
+  const topLevel = parts[1] || "documents";
+  if (topLevel === "documents" && parts.length > 3) {
+    return parts[2];
   }
-  return "documents";
+  return topLevel;
 }
 
 /** @param {string} dir @param {string} [prefix] @returns {any[]} */
@@ -52,14 +53,10 @@ function walk(dir, prefix = "") {
       entries.push(...walk(full, rel));
     } else {
       const ext = extname(entry).replace(".", "").toLowerCase() || "txt";
-      // Derive category from the directory immediately under src/
-      // e.g. src/documents/prompt/foo.html → "prompt"
-      const parts = rel.split("/");
-      const dirCategory = parts.length > 2 ? parts[2] : (parts.length > 1 ? parts[1] : "documents");
       entries.push({
         name: entry.replace(/\.[^.]+$/, ""),
         path: rel,
-        category: dirCategory,
+        category: inferCategory(rel),
         ext,
         size: stat.size,
       });

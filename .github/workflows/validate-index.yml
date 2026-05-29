@@ -1,0 +1,22 @@
+name: Validate Index
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate index to temp file
+        run: node src/_scripts/generate_index.mjs --out "$RUNNER_TEMP/index.generated.json"
+
+      - name: Compare generated index with committed file
+        run: diff -u index.json "$RUNNER_TEMP/index.generated.json"

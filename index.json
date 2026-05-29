@@ -1,51 +1,72 @@
 [
   {
+    "name": "git_best_practices_guide",
+    "path": "src/documents/git/git_best_practices_guide.html",
+    "category": "git",
+    "ext": "html",
+    "size": 9285
+  },
+  {
     "name": "prompt-engineering-lab",
     "path": "src/documents/prompt/prompt-engineering-lab.html",
     "category": "prompt",
     "ext": "html",
-    "size": 33781
+    "size": 33952
   },
   {
     "name": "prompt-engineering",
     "path": "src/documents/prompt/prompt-engineering.html",
     "category": "prompt",
     "ext": "html",
-    "size": 6502
+    "size": 6716
   },
   {
     "name": "prompt_lib_template",
     "path": "src/documents/prompt/prompt_lib_template.html",
     "category": "prompt",
     "ext": "html",
-    "size": 26294
+    "size": 26551
   },
   {
     "name": "ai-assist-cli_ts",
     "path": "src/documents/ts/ai-assist-cli_ts.html",
     "category": "ts",
     "ext": "html",
-    "size": 9287
+    "size": 9518
   },
   {
     "name": "output_structured_json",
     "path": "src/documents/ts/output_structured_json.html",
     "category": "ts",
     "ext": "html",
-    "size": 13010
+    "size": 15450
   },
   {
     "name": "return_valid_json",
     "path": "src/documents/ts/return_valid_json.html",
     "category": "ts",
     "ext": "html",
-    "size": 13010
+    "size": 9735
   },
   {
     "name": "simple text-in_text-out_ts",
     "path": "src/documents/ts/simple text-in_text-out_ts.html",
     "category": "ts",
     "ext": "html",
-    "size": 11233
+    "size": 13716
+  },
+  {
+    "name": "git_branch_workflow",
+    "path": "src/images/git_branch_workflow.svg",
+    "category": "images",
+    "ext": "svg",
+    "size": 23366
+  },
+  {
+    "name": "git_branch_workflow_guide",
+    "path": "src/images/git_branch_workflow_guide.html",
+    "category": "images",
+    "ext": "html",
+    "size": 19220
   }
 ]
