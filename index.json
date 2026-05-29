@@ -4,14 +4,14 @@
     "path": "src/documents/git/git_best_practices_guide.html",
     "category": "git",
     "ext": "html",
-    "size": 10646
+    "size": 10978
   },
   {
     "name": "git_branch_workflow_guide",
     "path": "src/documents/git/git_branch_workflow_guide.html",
     "category": "git",
     "ext": "html",
-    "size": 20581
+    "size": 21149
   },
   {
     "name": "prompt-engineering-lab",

@@ -31,9 +31,22 @@
   }
 
   .brand-doc {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2.75rem 1.5rem 4rem;
     font-family: var(--font-sans);
     color: var(--text-main);
     line-height: 1.7;
+  }
+
+  .brand-doc > div:first-of-type {
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand-doc > div {
+    margin-bottom: 1.75rem;
   }
 
   .brand-doc :not(pre) > code {
@@ -41,12 +54,17 @@
     color: var(--text-main);
   }
 
+  .brand-doc code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
   .brand-doc svg text {
     font-family: var(--font-sans);
     fill: currentColor;
   }
 </style>
-<div class="brand-doc" style="padding: 2rem 0; font-family: var(--font-sans); color: var(--text-main);">
+<div class="brand-doc" style="font-family: var(--font-sans); color: var(--text-main);">
   <div style="margin-bottom: 3rem;">
     <h1 style="font-size: 28px; font-weight: 500; margin: 0 0 12px 0;">Git best practices</h1>
     <p style="font-size: 15px; color: var(--color-text-secondary); margin: 0; line-height: 1.6;">Stop wandering in the jungle. Use a simple, predictable workflow and master just 3 commands.</p>

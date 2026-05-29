@@ -31,9 +31,27 @@
   }
 
   .brand-doc {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 2.75rem 1.5rem 4rem;
     font-family: var(--font-sans);
     color: var(--text-main);
     line-height: 1.7;
+  }
+
+  .brand-doc > div:first-of-type {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .diagram-shell {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
   }
 
   .brand-doc :not(pre) > code {
@@ -41,19 +59,32 @@
     color: var(--text-main);
   }
 
+  .brand-doc code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .brand-doc svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
   .brand-doc svg text {
     font-family: var(--font-sans);
     fill: currentColor;
   }
 </style>
-<div class="brand-doc" style="padding: 2rem 0; font-family: var(--font-sans); color: var(--text-main); max-width: 100%;">
+<div class="brand-doc" style="font-family: var(--font-sans); color: var(--text-main);">
   
   <div style="margin-bottom: 3rem;">
     <h1 style="font-size: 28px; font-weight: 500; margin: 0 0 12px 0;">Git branch workflow</h1>
     <p style="font-size: 15px; color: var(--color-text-secondary); margin: 0; line-height: 1.6;">The pattern that keeps your code stable and team productive. Main stays safe. Features stay isolated. Changes get reviewed.</p>
   </div>
 
-  <svg width="100%" viewBox="0 0 680 520" role="img" style="margin-bottom: 2rem;">
+  <div class="diagram-shell">
+  <svg width="100%" viewBox="0 0 680 520" role="img">
     <title>Git branch workflow: main, feature branches, pull requests, merge</title>
     <desc>Visual workflow showing how main branch serves as source of truth, feature branches branch off for work, pull requests provide review gates, and merges bring changes back to main.</desc>
     <defs>
@@ -118,6 +149,7 @@
     <text style="font-size: 12px; color: var(--color-text-secondary);" x="200" y="280" text-anchor="middle">✓ approved</text>
     <text style="font-size: 12px; color: var(--color-text-secondary);" x="380" y="220" text-anchor="middle">✓ approved</text>
   </svg>
+  </div>
 
   <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
     <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 12px 0;">Core principle</h2>
