@@ -1,4 +1,52 @@
-<div style="padding: 2rem 0; font-family: var(--font-sans); color: var(--color-text-primary); max-width: 100%;">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #faf9f7;
+    --surface: #f0ede8;
+    --border: #d4cfc6;
+    --text: #1a1814;
+    --text-main: #1a1814;
+    --text-muted: #6b6560;
+    --accent: #3d5a80;
+    --accent-light: #e8e5f0;
+    --code-bg: #1a1a1a;
+    --max-width: 800px;
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --color-text-primary: var(--text-main);
+    --color-text-secondary: var(--text-muted);
+    --color-text-info: var(--accent);
+    --color-text-success: #1d9e75;
+    --color-text-warning: #b26a00;
+    --color-border-secondary: var(--border);
+    --color-border-tertiary: var(--border);
+    --color-background-primary: var(--surface);
+    --color-background-secondary: var(--bg);
+    --color-background-info: var(--accent-light);
+    --font-sans: 'Crimson Pro', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --border-radius-md: 6px;
+    --border-radius-lg: 12px;
+  }
+
+  .brand-doc {
+    font-family: var(--font-sans);
+    color: var(--text-main);
+    line-height: 1.7;
+  }
+
+  .brand-doc :not(pre) > code {
+    background: var(--surface) !important;
+    color: var(--text-main);
+  }
+
+  .brand-doc svg text {
+    font-family: var(--font-sans);
+    fill: currentColor;
+  }
+</style>
+<div class="brand-doc" style="padding: 2rem 0; font-family: var(--font-sans); color: var(--text-main); max-width: 100%;">
   
   <div style="margin-bottom: 3rem;">
     <h1 style="font-size: 28px; font-weight: 500; margin: 0 0 12px 0;">Git branch workflow</h1>
