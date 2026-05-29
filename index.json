@@ -7,6 +7,13 @@
     "size": 9285
   },
   {
+    "name": "git_branch_workflow_guide",
+    "path": "src/documents/git/git_branch_workflow_guide.html",
+    "category": "git",
+    "ext": "html",
+    "size": 19220
+  },
+  {
     "name": "prompt-engineering-lab",
     "path": "src/documents/prompt/prompt-engineering-lab.html",
     "category": "prompt",
@@ -61,12 +68,5 @@
     "category": "images",
     "ext": "svg",
     "size": 23366
-  },
-  {
-    "name": "git_branch_workflow_guide",
-    "path": "src/images/git_branch_workflow_guide.html",
-    "category": "images",
-    "ext": "html",
-    "size": 19220
   }
 ]
