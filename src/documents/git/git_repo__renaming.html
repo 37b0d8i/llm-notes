@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Repository Renaming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --surface: #f0ede8;
+      --border: #d4cfc6;
+      --text: #1a1814;
+      --text-main: #1a1814;
+      --text-muted: #6b6560;
+      --accent: #3d5a80;
+      --accent-light: #e8e5f0;
+      --code-bg: #1a1a1a;
+      --max-width: 800px;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Crimson Pro', Georgia, serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    .brand-doc {
+      width: min(100% - 2rem, var(--max-width));
+      margin: 0 auto;
+      padding: 2.75rem 1.5rem 4rem;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 0.75rem;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      line-height: 1;
+      font-weight: 600;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    h3 {
+      margin-bottom: 0.65rem;
+      font-size: 1.05rem;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .subtitle,
+    .muted {
+      color: var(--text-muted);
+    }
+
+    .subtitle {
+      max-width: 46rem;
+      font-size: 1.08rem;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .panel + .panel {
+      margin-top: 1rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+
+    pre {
+      margin: 0.85rem 0 0;
+      padding: 1rem;
+      overflow-x: auto;
+      max-width: 100%;
+      border-radius: var(--radius-sm);
+      background: var(--code-bg);
+      color: #f7f3ea;
+      white-space: pre;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.86rem;
+    }
+
+    :not(pre) > code {
+      background: var(--surface) !important;
+      color: var(--text-main);
+      padding: 0.08rem 0.3rem;
+      border-radius: var(--radius-sm);
+      overflow-wrap: anywhere;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .step {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+      gap: 1rem;
+    }
+
+    .variant {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+
+    @media (max-width: 720px) {
+      .brand-doc {
+        width: min(100% - 1rem, var(--max-width));
+        padding: 2rem 1rem 3rem;
+      }
+
+      .workflow {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="brand-doc">
+    <header>
+      <h1>Git repository renaming</h1>
+      <p class="subtitle">A safe, repeatable process for changing a repository name on GitHub and updating the local clone without losing remote history, breaking remotes, or leaving the repo in an inconsistent state.</p>
+    </header>
+
+    <section class="section panel">
+      <div class="badge-row">
+        <span class="badge">safe</span>
+        <span class="badge">remote + local</span>
+        <span class="badge">github cli</span>
+        <span class="badge">git remote update</span>
+      </div>
+      <h2>What this process covers</h2>
+      <ul>
+        <li>Rename the repository on GitHub first.</li>
+        <li>Update the local `origin` remote to the new name.</li>
+        <li>Optionally rename the local folder to match the new repo name.</li>
+        <li>Verify the new remote before pushing again.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Process</h2>
+      <div class="workflow">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Confirm current remote</h3>
+          <p class="muted">Read `git remote -v` and identify the owner, repo, and URL style.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Rename on GitHub</h3>
+          <p class="muted">Use the GitHub API or `gh api` to patch the repository name.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Update local remote</h3>
+          <p class="muted">Set `origin` to the new repo URL and verify with `git ls-remote`.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Optionally rename folder</h3>
+          <p class="muted">Rename the local directory only after the remote update is confirmed.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section panel">
+      <h2>Workflow</h2>
+      <ol>
+        <li>Check the current remote and make sure the repo is clean.</li>
+        <li>Use a dry-run mode first to preview the owner, current name, and target name.</li>
+        <li>Require an explicit confirmation flag before any GitHub rename.</li>
+        <li>Update the local remote URL to the renamed repository.</li>
+        <li>Verify the new remote still resolves before pushing anything else.</li>
+      </ol>
+
+      <h3>Recommended safety gates</h3>
+      <ul>
+        <li>Refuse detached HEAD state.</li>
+        <li>Refuse unsupported remote URL formats.</li>
+        <li>Refuse directory rename if the target path already exists.</li>
+        <li>Refuse a live rename without `--yes`.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Example cases</h2>
+      <div class="variant-grid">
+        <div class="variant">
+          <h3>Case 1: SSH remote</h3>
+          <p class="muted">Current remote looks like `git@github.com:owner/repo.git`.</p>
+          <pre><code>scripts/rename_github_repo.sh new-name --yes</code></pre>
+        </div>
+
+        <div class="variant">
+          <h3>Case 2: Rename local folder too</h3>
+          <p class="muted">Use this when you want the filesystem path to match the new repo name.</p>
+          <pre><code>scripts/rename_github_repo.sh new-name --yes --rename-dir</code></pre>
+        </div>
+
+        <div class="variant">
+          <h3>Case 3: Preview only</h3>
+          <p class="muted">Use dry-run first to verify the parsed owner and repo name.</p>
+          <pre><code>scripts/rename_github_repo.sh new-name --dry-run</code></pre>
+        </div>
+
+        <div class="variant">
+          <h3>Case 4: HTTPS remote</h3>
+          <p class="muted">The script accepts `https://github.com/owner/repo.git` too and preserves that style.</p>
+          <pre><code>scripts/rename_github_repo.sh new-name --yes --remote origin</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section panel">
+      <h2>Variants and edge cases</h2>
+      <ul>
+        <li>Only the repository name changes. The owner stays the same unless you override it explicitly.</li>
+        <li>If your repo is part of an org transfer, update the owner separately and treat that as a distinct operation.</li>
+        <li>If CI uses full history or branch syncs, check out with `fetch-depth: 0` before running rename-related automation.</li>
+        <li>If the repo was renamed externally, update local remotes and verify before your next push.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

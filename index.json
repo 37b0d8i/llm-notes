@@ -1,5 +1,12 @@
 [
   {
+    "name": "rename_github_repo",
+    "path": "scripts/rename_github_repo.sh",
+    "category": "rename_github_repo.sh",
+    "ext": "sh",
+    "size": 4611
+  },
+  {
     "name": "safe_git_push",
     "path": "scripts/safe_git_push.sh",
     "category": "safe_git_push.sh",
@@ -26,6 +33,13 @@
     "category": "git",
     "ext": "html",
     "size": 10161
+  },
+  {
+    "name": "git_repo__renaming",
+    "path": "src/documents/git/git_repo__renaming.html",
+    "category": "git",
+    "ext": "html",
+    "size": 8786
   },
   {
     "name": "prompt-engineering-lab",

@@ -17,8 +17,10 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Validate push helper syntax
-        run: bash -n scripts/safe_git_push.sh
+      - name: Validate shell helper syntax
+        run: |
+          bash -n scripts/safe_git_push.sh
+          bash -n scripts/rename_github_repo.sh
 
       - name: Generate index to temp file
         run: node src/_scripts/generate_index.mjs --out "$RUNNER_TEMP/index.generated.json"
