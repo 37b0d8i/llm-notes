@@ -1,192 +1,582 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url("https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap");
 
-  :root {
-    --bg: #faf9f7;
-    --surface: #f0ede8;
-    --border: #d4cfc6;
-    --text: #1a1814;
-    --text-main: #1a1814;
-    --text-muted: #6b6560;
-    --accent: #3d5a80;
-    --accent-light: #e8e5f0;
-    --code-bg: #1a1a1a;
-    --max-width: 800px;
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --color-text-primary: var(--text-main);
-    --color-text-secondary: var(--text-muted);
-    --color-text-info: var(--accent);
-    --color-text-success: #1d9e75;
-    --color-text-warning: #b26a00;
-    --color-border-secondary: var(--border);
-    --color-border-tertiary: var(--border);
-    --color-background-primary: var(--surface);
-    --color-background-secondary: var(--bg);
-    --color-background-info: var(--accent-light);
-    --font-sans: 'Crimson Pro', Georgia, serif;
-    --font-mono: 'JetBrains Mono', monospace;
-    --border-radius-md: 6px;
-    --border-radius-lg: 12px;
-  }
-
-  .brand-doc {
-    width: min(100% - 2rem, 920px);
-    margin: 0 auto;
-    padding: 2.75rem 1.5rem 4rem;
-    font-family: var(--font-sans);
-    color: var(--text-main);
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  .brand-doc > div:first-of-type {
-    margin-bottom: 2.25rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .brand-doc > div {
-    margin-bottom: 1.75rem;
-  }
-
-  .brand-doc :not(pre) > code {
-    background: var(--surface) !important;
-    color: var(--text-main);
-  }
-
-  .brand-doc code {
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-
-  .brand-doc pre {
-    max-width: 100%;
-    overflow-x: auto;
-    white-space: pre;
-  }
-
-  .brand-doc svg text {
-    font-family: var(--font-sans);
-    fill: currentColor;
-  }
-
-  @media (max-width: 640px) {
-    .brand-doc {
-      width: min(100% - 1rem, 920px);
-      padding: 2rem 1rem 3rem;
+    :root {
+        --bg: #faf9f7;
+        --surface: #f0ede8;
+        --border: #d4cfc6;
+        --text: #1a1814;
+        --text-main: #1a1814;
+        --text-muted: #6b6560;
+        --accent: #3d5a80;
+        --accent-light: #e8e5f0;
+        --code-bg: #1a1a1a;
+        --max-width: 800px;
+        --radius-sm: 6px;
+        --radius-md: 12px;
+        --color-text-primary: var(--text-main);
+        --color-text-secondary: var(--text-muted);
+        --color-text-info: var(--accent);
+        --color-text-success: #1d9e75;
+        --color-text-warning: #b26a00;
+        --color-border-secondary: var(--border);
+        --color-border-tertiary: var(--border);
+        --color-background-primary: var(--surface);
+        --color-background-secondary: var(--bg);
+        --color-background-info: var(--accent-light);
+        --font-sans: "Crimson Pro", Georgia, serif;
+        --font-mono: "JetBrains Mono", monospace;
+        --border-radius-md: 6px;
+        --border-radius-lg: 12px;
     }
-  }
+
+    .brand-doc {
+        width: min(100% - 2rem, 920px);
+        margin: 0 auto;
+        padding: 2.75rem 1.5rem 4rem;
+        font-family: var(--font-sans);
+        color: var(--text-main);
+        line-height: 1.7;
+        overflow-x: hidden;
+    }
+
+    .brand-doc > div:first-of-type {
+        margin-bottom: 2.25rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .brand-doc > div {
+        margin-bottom: 1.75rem;
+    }
+
+    .brand-doc :not(pre) > code {
+        background: var(--surface) !important;
+        color: var(--text-main);
+    }
+
+    .brand-doc code {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .brand-doc pre {
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: pre;
+    }
+
+    .brand-doc svg text {
+        font-family: var(--font-sans);
+        fill: currentColor;
+    }
+
+    @media (max-width: 640px) {
+        .brand-doc {
+            width: min(100% - 1rem, 920px);
+            padding: 2rem 1rem 3rem;
+        }
+    }
 </style>
-<div class="brand-doc" style="font-family: var(--font-sans); color: var(--text-main);">
-  <div style="margin-bottom: 3rem;">
-    <h1 style="font-size: 28px; font-weight: 500; margin: 0 0 12px 0;">Git best practices</h1>
-    <p style="font-size: 15px; color: var(--color-text-secondary); margin: 0; line-height: 1.6;">Stop wandering in the jungle. Use a simple, predictable workflow and master just 3 commands.</p>
-  </div>
-
-  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
-    <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 12px 0;">Core principle</h2>
-    <p style="font-size: 14px; color: var(--color-text-secondary); margin: 0; line-height: 1.7;">Simple branch strategy (main + feature branches) → Small, frequent commits → Only 3 undo commands → Always visualize before acting.</p>
-  </div>
-
-  <div style="margin-bottom: 2.5rem;">
-    <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 16px 0;">The 3 commands you need</h2>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.5rem;">
-      <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem;">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-          <i class="ti ti-check" style="font-size: 20px; color: var(--color-text-info); aria-hidden='true'"></i>
-          <h3 style="font-size: 15px; font-weight: 500; margin: 0;">checkout</h3>
-        </div>
-        <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 10px 0;"><code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">git checkout file.js</code></p>
-        <p style="font-size: 13px; margin: 0;">Discard local changes to one file.</p>
-        <p style="font-size: 12px; color: var(--color-text-success); margin: 8px 0 0 0;"><i class="ti ti-shield-check" style="font-size: 14px; vertical-align: -2px;"></i> Safe</p>
-      </div>
-
-      <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem;">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-          <i class="ti ti-arrow-back" style="font-size: 20px; color: var(--color-text-warning); aria-hidden='true'"></i>
-          <h3 style="font-size: 15px; font-weight: 500; margin: 0;">reset</h3>
-        </div>
-        <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 10px 0;"><code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">git reset HEAD~1</code></p>
-        <p style="font-size: 13px; margin: 0;">Undo last commit, keep changes locally.</p>
-        <p style="font-size: 12px; color: var(--color-text-warning); margin: 8px 0 0 0;"><i class="ti ti-alert-circle" style="font-size: 14px; vertical-align: -2px;"></i> Medium risk (before push)</p>
-      </div>
-
-      <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem;">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-          <i class="ti ti-history" style="font-size: 20px; color: var(--color-text-info); aria-hidden='true'"></i>
-          <h3 style="font-size: 15px; font-weight: 500; margin: 0;">revert</h3>
-        </div>
-        <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 10px 0;"><code style="background: var(--color-background-secondary); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">git revert HEAD</code></p>
-        <p style="font-size: 13px; margin: 0;">Undo a commit (after push). Creates a new commit.</p>
-        <p style="font-size: 12px; color: var(--color-text-success); margin: 8px 0 0 0;"><i class="ti ti-shield-check" style="font-size: 14px; vertical-align: -2px;"></i> Safe</p>
-      </div>
+<div
+    class="brand-doc"
+    style="font-family: var(--font-sans); color: var(--text-main)"
+>
+    <div style="margin-bottom: 3rem">
+        <h1 style="font-size: 28px; font-weight: 500; margin: 0 0 12px 0">
+            Git best practices
+        </h1>
+        <p
+            style="
+                font-size: 15px;
+                color: var(--color-text-secondary);
+                margin: 0;
+                line-height: 1.6;
+            "
+        >
+            Stop wandering in the jungle. Use a simple, predictable workflow and
+            master just 3 commands.
+        </p>
     </div>
 
-    <div style="background: var(--color-background-info); border-radius: var(--border-radius-md); padding: 12px 14px; font-size: 13px; color: var(--color-text-info);">
-      <p style="margin: 0;"><strong>Never use `git reset --hard`</strong> unless you fully understand it. Use `revert` instead (safer for shared history).</p>
+    <div
+        style="
+            background: var(--color-background-secondary);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        "
+    >
+        <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 12px 0">
+            Core principle
+        </h2>
+        <p
+            style="
+                font-size: 14px;
+                color: var(--color-text-secondary);
+                margin: 0;
+                line-height: 1.7;
+            "
+        >
+            Simple branch strategy (main + feature branches) → Small, frequent
+            commits → Only 3 undo commands → Always visualize before acting.
+        </p>
     </div>
-  </div>
 
-  <div style="margin-bottom: 2.5rem;">
-    <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 16px 0;">Your daily workflow</h2>
-    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem;">
-      <div style="font-family: var(--font-mono); font-size: 13px; line-height: 1.8; color: var(--color-text-secondary);">
-        <div style="margin-bottom: 12px;">
-          <span style="color: var(--color-text-primary);">$ git status</span>
-          <span style="margin-left: 8px;">— Always check first</span>
+    <div style="margin-bottom: 2.5rem">
+        <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 16px 0">
+            The 3 commands you need
+        </h2>
+
+        <div
+            style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 12px;
+                margin-bottom: 1.5rem;
+            "
+        >
+            <div
+                style="
+                    background: var(--color-background-primary);
+                    border: 0.5px solid var(--color-border-tertiary);
+                    border-radius: var(--border-radius-lg);
+                    padding: 1rem;
+                "
+            >
+                <div
+                    style="
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        margin-bottom: 12px;
+                    "
+                >
+                    <i
+                        class="ti ti-check"
+                        style="font-size: 20px; color: var(--color-text-info); aria-hidden='true'"
+                    ></i>
+                    <h3 style="font-size: 15px; font-weight: 500; margin: 0">
+                        checkout
+                    </h3>
+                </div>
+                <p
+                    style="
+                        font-size: 13px;
+                        color: var(--color-text-secondary);
+                        margin: 0 0 10px 0;
+                    "
+                >
+                    <code
+                        style="
+                            background: var(--color-background-secondary);
+                            padding: 2px 6px;
+                            border-radius: 4px;
+                            font-family: var(--font-mono);
+                            font-size: 12px;
+                        "
+                        >git checkout file.js</code
+                    >
+                </p>
+                <p style="font-size: 13px; margin: 0">
+                    Discard local changes to one file.
+                </p>
+                <p
+                    style="
+                        font-size: 12px;
+                        color: var(--color-text-success);
+                        margin: 8px 0 0 0;
+                    "
+                >
+                    <i
+                        class="ti ti-shield-check"
+                        style="font-size: 14px; vertical-align: -2px"
+                    ></i>
+                    Safe
+                </p>
+            </div>
+
+            <div
+                style="
+                    background: var(--color-background-primary);
+                    border: 0.5px solid var(--color-border-tertiary);
+                    border-radius: var(--border-radius-lg);
+                    padding: 1rem;
+                "
+            >
+                <div
+                    style="
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        margin-bottom: 12px;
+                    "
+                >
+                    <i
+                        class="ti ti-arrow-back"
+                        style="font-size: 20px; color: var(--color-text-warning); aria-hidden='true'"
+                    ></i>
+                    <h3 style="font-size: 15px; font-weight: 500; margin: 0">
+                        reset
+                    </h3>
+                </div>
+                <p
+                    style="
+                        font-size: 13px;
+                        color: var(--color-text-secondary);
+                        margin: 0 0 10px 0;
+                    "
+                >
+                    <code
+                        style="
+                            background: var(--color-background-secondary);
+                            padding: 2px 6px;
+                            border-radius: 4px;
+                            font-family: var(--font-mono);
+                            font-size: 12px;
+                        "
+                        >git reset HEAD~1</code
+                    >
+                </p>
+                <p style="font-size: 13px; margin: 0">
+                    Undo last commit, keep changes locally.
+                </p>
+                <p
+                    style="
+                        font-size: 12px;
+                        color: var(--color-text-warning);
+                        margin: 8px 0 0 0;
+                    "
+                >
+                    <i
+                        class="ti ti-alert-circle"
+                        style="font-size: 14px; vertical-align: -2px"
+                    ></i>
+                    Medium risk (before push)
+                </p>
+            </div>
+
+            <div
+                style="
+                    background: var(--color-background-primary);
+                    border: 0.5px solid var(--color-border-tertiary);
+                    border-radius: var(--border-radius-lg);
+                    padding: 1rem;
+                "
+            >
+                <div
+                    style="
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        margin-bottom: 12px;
+                    "
+                >
+                    <i
+                        class="ti ti-history"
+                        style="font-size: 20px; color: var(--color-text-info); aria-hidden='true'"
+                    ></i>
+                    <h3 style="font-size: 15px; font-weight: 500; margin: 0">
+                        revert
+                    </h3>
+                </div>
+                <p
+                    style="
+                        font-size: 13px;
+                        color: var(--color-text-secondary);
+                        margin: 0 0 10px 0;
+                    "
+                >
+                    <code
+                        style="
+                            background: var(--color-background-secondary);
+                            padding: 2px 6px;
+                            border-radius: 4px;
+                            font-family: var(--font-mono);
+                            font-size: 12px;
+                        "
+                        >git revert HEAD</code
+                    >
+                </p>
+                <p style="font-size: 13px; margin: 0">
+                    Undo a commit (after push). Creates a new commit.
+                </p>
+                <p
+                    style="
+                        font-size: 12px;
+                        color: var(--color-text-success);
+                        margin: 8px 0 0 0;
+                    "
+                >
+                    <i
+                        class="ti ti-shield-check"
+                        style="font-size: 14px; vertical-align: -2px"
+                    ></i>
+                    Safe
+                </p>
+            </div>
         </div>
-        <div style="margin-bottom: 12px;">
-          <span style="color: var(--color-text-primary);">$ git add file.js</span>
-          <span style="margin-left: 8px;">— Stage your work</span>
+
+        <div
+            style="
+                background: var(--color-background-info);
+                border-radius: var(--border-radius-md);
+                padding: 12px 14px;
+                font-size: 13px;
+                color: var(--color-text-info);
+            "
+        >
+            <p style="margin: 0">
+                <strong>Never use `git reset --hard`</strong> unless you fully
+                understand it. Use `revert` instead (safer for shared history).
+            </p>
         </div>
-        <div style="margin-bottom: 12px;">
-          <span style="color: var(--color-text-primary);">$ git commit -m "fix: …"</span>
-          <span style="margin-left: 8px;">— Commit with clarity</span>
-        </div>
-        <div style="margin-bottom: 12px;">
-          <span style="color: var(--color-text-primary);">$ git push</span>
-          <span style="margin-left: 8px;">— Push to remote</span>
-        </div>
-        <div style="border-top: 0.5px solid var(--color-border-tertiary); padding-top: 12px; margin-top: 12px;">
-          <span style="color: var(--color-text-primary);">$ git log --oneline -5</span>
-          <span style="margin-left: 8px;">— See what happened</span>
-        </div>
-      </div>
     </div>
-    <p style="font-size: 13px; color: var(--color-text-secondary); margin: 12px 0 0 0;"><i class="ti ti-bulb" style="font-size: 14px; vertical-align: -2px; margin-right: 6px;" aria-hidden="true"></i>This covers 95% of real development work.</p>
-  </div>
 
-  <div style="margin-bottom: 2.5rem;">
-    <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 16px 0;">Decision tree: What to do when things go wrong</h2>
-    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem;">
-      <div style="font-size: 13px; line-height: 1.8;">
-        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 0.5px solid var(--color-border-tertiary);">
-          <p style="font-weight: 500; margin: 0 0 6px 0;"><i class="ti ti-help" style="color: var(--color-text-secondary); margin-right: 6px;" aria-hidden="true"></i>I changed a file and want to discard changes</p>
-          <p style="margin: 0; padding-left: 24px; color: var(--color-text-secondary);">→ Use `git checkout file.js`</p>
+    <div style="margin-bottom: 2.5rem">
+        <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 16px 0">
+            Your daily workflow
+        </h2>
+        <div
+            style="
+                background: var(--color-background-primary);
+                border: 0.5px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+                padding: 1.25rem;
+            "
+        >
+            <div
+                style="
+                    font-family: var(--font-mono);
+                    font-size: 13px;
+                    line-height: 1.8;
+                    color: var(--color-text-secondary);
+                "
+            >
+                <div style="margin-bottom: 12px">
+                    <span style="color: var(--color-text-primary)"
+                        >$ git status</span
+                    >
+                    <span style="margin-left: 8px">— Always check first</span>
+                </div>
+                <div style="margin-bottom: 12px">
+                    <span style="color: var(--color-text-primary)"
+                        >$ git add file.js</span
+                    >
+                    <span style="margin-left: 8px">— Stage your work</span>
+                </div>
+                <div style="margin-bottom: 12px">
+                    <span style="color: var(--color-text-primary)"
+                        >$ git commit -m "fix: …"</span
+                    >
+                    <span style="margin-left: 8px">— Commit with clarity</span>
+                </div>
+                <div style="margin-bottom: 12px">
+                    <span style="color: var(--color-text-primary)"
+                        >$ git push</span
+                    >
+                    <span style="margin-left: 8px">— Push to remote</span>
+                </div>
+                <div
+                    style="
+                        border-top: 0.5px solid var(--color-border-tertiary);
+                        padding-top: 12px;
+                        margin-top: 12px;
+                    "
+                >
+                    <span style="color: var(--color-text-primary)"
+                        >$ git log --oneline -5</span
+                    >
+                    <span style="margin-left: 8px">— See what happened</span>
+                </div>
+            </div>
         </div>
-        
-        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 0.5px solid var(--color-border-tertiary);">
-          <p style="font-weight: 500; margin: 0 0 6px 0;"><i class="ti ti-help" style="color: var(--color-text-secondary); margin-right: 6px;" aria-hidden="true"></i>I committed but haven't pushed yet</p>
-          <p style="margin: 0; padding-left: 24px; color: var(--color-text-secondary);">→ Use `git reset HEAD~1` (edit files, recommit)</p>
-        </div>
-
-        <div style="margin-bottom: 0; padding-bottom: 0;">
-          <p style="font-weight: 500; margin: 0 0 6px 0;"><i class="ti ti-help" style="color: var(--color-text-secondary); margin-right: 6px;" aria-hidden="true"></i>I pushed a bad commit to shared branch</p>
-          <p style="margin: 0; padding-left: 24px; color: var(--color-text-secondary);">→ Use `git revert HEAD` (safest for shared history)</p>
-        </div>
-      </div>
+        <p
+            style="
+                font-size: 13px;
+                color: var(--color-text-secondary);
+                margin: 12px 0 0 0;
+            "
+        >
+            <i
+                class="ti ti-bulb"
+                style="font-size: 14px; vertical-align: -2px; margin-right: 6px"
+                aria-hidden="true"
+            ></i
+            >This covers 95% of real development work.
+        </p>
     </div>
-  </div>
 
-  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.5rem;">
-    <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 12px 0;">Why this works</h2>
-    <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: var(--color-text-secondary);">
-      <li style="margin-bottom: 8px;"><strong style="color: var(--color-text-primary);">Predictability:</strong> Use 5–6 commands every day. No surprises.</li>
-      <li style="margin-bottom: 8px;"><strong style="color: var(--color-text-primary);">Visibility:</strong> Always check status and history before acting.</li>
-      <li style="margin-bottom: 8px;"><strong style="color: var(--color-text-primary);">Safety:</strong> Use `revert`, not `reset --hard`, for shared branches.</li>
-      <li><strong style="color: var(--color-text-primary);">Simplicity:</strong> Feature branches + commits + pull requests. A clear path.</li>
-    </ul>
-  </div>
+    <div style="margin-bottom: 2.5rem">
+        <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 16px 0">
+            Decision tree: What to do when things go wrong
+        </h2>
+        <div
+            style="
+                background: var(--color-background-primary);
+                border: 0.5px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+                padding: 1.25rem;
+            "
+        >
+            <div style="font-size: 13px; line-height: 1.8">
+                <div
+                    style="
+                        margin-bottom: 12px;
+                        padding-bottom: 12px;
+                        border-bottom: 0.5px solid var(--color-border-tertiary);
+                    "
+                >
+                    <p style="font-weight: 500; margin: 0 0 6px 0">
+                        <i
+                            class="ti ti-help"
+                            style="
+                                color: var(--color-text-secondary);
+                                margin-right: 6px;
+                            "
+                            aria-hidden="true"
+                        ></i
+                        >I changed a file and want to discard changes
+                    </p>
+                    <p
+                        style="
+                            margin: 0;
+                            padding-left: 24px;
+                            color: var(--color-text-secondary);
+                        "
+                    >
+                        → Use `git checkout file.js`
+                    </p>
+                </div>
+
+                <div
+                    style="
+                        margin-bottom: 12px;
+                        padding-bottom: 12px;
+                        border-bottom: 0.5px solid var(--color-border-tertiary);
+                    "
+                >
+                    <p style="font-weight: 500; margin: 0 0 6px 0">
+                        <i
+                            class="ti ti-help"
+                            style="
+                                color: var(--color-text-secondary);
+                                margin-right: 6px;
+                            "
+                            aria-hidden="true"
+                        ></i
+                        >I committed but haven't pushed yet
+                    </p>
+                    <p
+                        style="
+                            margin: 0;
+                            padding-left: 24px;
+                            color: var(--color-text-secondary);
+                        "
+                    >
+                        → Use `git reset HEAD~1` (edit files, recommit)
+                    </p>
+                </div>
+
+                <div
+                    style="
+                        margin-bottom: 12px;
+                        padding-bottom: 12px;
+                        border-bottom: 0.5px solid var(--color-border-tertiary);
+                    "
+                >
+                    <p style="font-weight: 500; margin: 0 0 6px 0">
+                        <i
+                            class="ti ti-help"
+                            style="
+                                color: var(--color-text-secondary);
+                                margin-right: 6px;
+                            "
+                            aria-hidden="true"
+                        ></i
+                        >I pushed a bad commit to shared branch
+                    </p>
+                    <p
+                        style="
+                            margin: 0;
+                            padding-left: 24px;
+                            color: var(--color-text-secondary);
+                        "
+                    >
+                        → Use `git revert HEAD` (safest for shared history)
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 0; padding-bottom: 0">
+                    <p style="font-weight: 500; margin: 0 0 6px 0">
+                        <i
+                            class="ti ti-help"
+                            style="
+                                color: var(--color-text-secondary);
+                                margin-right: 6px;
+                            "
+                            aria-hidden="true"
+                        ></i
+                        >`git pull --rebase` failed with conflicts
+                    </p>
+                    <p
+                        style="
+                            margin: 0;
+                            padding-left: 24px;
+                            color: var(--color-text-secondary);
+                        "
+                    >
+                        → `git status` → Fix files → `git add` → `git rebase
+                        --continue`
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        style="
+            background: var(--color-background-secondary);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+        "
+    >
+        <h2 style="font-size: 16px; font-weight: 500; margin: 0 0 12px 0">
+            Why this works
+        </h2>
+        <ul
+            style="
+                margin: 0;
+                padding-left: 20px;
+                font-size: 14px;
+                line-height: 1.8;
+                color: var(--color-text-secondary);
+            "
+        >
+            <li style="margin-bottom: 8px">
+                <strong style="color: var(--color-text-primary)"
+                    >Predictability:</strong
+                >
+                Use 5–6 commands every day. No surprises.
+            </li>
+            <li style="margin-bottom: 8px">
+                <strong style="color: var(--color-text-primary)"
+                    >Visibility:</strong
+                >
+                Always check status and history before acting.
+            </li>
+            <li style="margin-bottom: 8px">
+                <strong style="color: var(--color-text-primary)"
+                    >Safety:</strong
+                >
+                Use `revert`, not `reset --hard`, for shared branches.
+            </li>
+            <li>
+                <strong style="color: var(--color-text-primary)"
+                    >Simplicity:</strong
+                >
+                Feature branches + commits + pull requests. A clear path.
+            </li>
+        </ul>
+    </div>
 </div>

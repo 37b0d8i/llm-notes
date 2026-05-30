@@ -1,303 +1,379 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Git Practical Remedies</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #faf9f7;
-      --surface: #f0ede8;
-      --border: #d4cfc6;
-      --text: #1a1814;
-      --text-main: #1a1814;
-      --text-muted: #6b6560;
-      --accent: #3d5a80;
-      --accent-light: #e8e5f0;
-      --code-bg: #1a1a1a;
-      --max-width: 800px;
-      --radius-sm: 6px;
-      --radius-md: 12px;
-    }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Git Practical Remedies</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg: #faf9f7;
+                --surface: #f0ede8;
+                --border: #d4cfc6;
+                --text: #1a1814;
+                --text-main: #1a1814;
+                --text-muted: #6b6560;
+                --accent: #3d5a80;
+                --accent-light: #e8e5f0;
+                --code-bg: #1a1a1a;
+                --max-width: 800px;
+                --radius-sm: 6px;
+                --radius-md: 12px;
+            }
 
-    * {
-      box-sizing: border-box;
-    }
+            * {
+                box-sizing: border-box;
+            }
 
-    body {
-      margin: 0;
-      font-family: 'Crimson Pro', Georgia, serif;
-      background-color: var(--bg);
-      color: var(--text-main);
-      line-height: 1.7;
-    }
+            body {
+                margin: 0;
+                font-family: "Crimson Pro", Georgia, serif;
+                background-color: var(--bg);
+                color: var(--text-main);
+                line-height: 1.7;
+            }
 
-    .brand-doc {
-      width: min(100% - 2rem, var(--max-width));
-      margin: 0 auto;
-      padding: 2.75rem 1.5rem 4rem;
-      overflow-x: hidden;
-    }
+            .brand-doc {
+                width: min(100% - 2rem, var(--max-width));
+                margin: 0 auto;
+                padding: 2.75rem 1.5rem 4rem;
+                overflow-x: hidden;
+            }
 
-    header {
-      margin-bottom: 2.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
+            header {
+                margin-bottom: 2.5rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 1px solid var(--border);
+            }
 
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
+            h1,
+            h2,
+            h3,
+            p {
+                margin-top: 0;
+            }
 
-    h1 {
-      margin-bottom: 0.75rem;
-      font-size: clamp(2rem, 7vw, 3.3rem);
-      line-height: 1;
-      font-weight: 600;
-    }
+            h1 {
+                margin-bottom: 0.75rem;
+                font-size: clamp(2rem, 7vw, 3.3rem);
+                line-height: 1;
+                font-weight: 600;
+            }
 
-    h2 {
-      margin-bottom: 1rem;
-      font-size: 1.35rem;
-      line-height: 1.2;
-      font-weight: 600;
-    }
+            h2 {
+                margin-bottom: 1rem;
+                font-size: 1.35rem;
+                line-height: 1.2;
+                font-weight: 600;
+            }
 
-    h3 {
-      margin-bottom: 0.65rem;
-      font-size: 1.05rem;
-      line-height: 1.25;
-      font-weight: 600;
-    }
+            h3 {
+                margin-bottom: 0.65rem;
+                font-size: 1.05rem;
+                line-height: 1.25;
+                font-weight: 600;
+            }
 
-    .subtitle,
-    .muted {
-      color: var(--text-muted);
-    }
+            .subtitle,
+            .muted {
+                color: var(--text-muted);
+            }
 
-    .subtitle {
-      max-width: 42rem;
-      margin-bottom: 0;
-      font-size: 1.08rem;
-    }
+            .subtitle {
+                max-width: 42rem;
+                margin-bottom: 0;
+                font-size: 1.08rem;
+            }
 
-    .section {
-      margin-bottom: 2rem;
-    }
+            .section {
+                margin-bottom: 2rem;
+            }
 
-    .panel,
-    .remedy,
-    .decision-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      background: var(--surface);
-    }
+            .panel,
+            .remedy,
+            .decision-card {
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                background: var(--surface);
+            }
 
-    .panel {
-      padding: 1.35rem;
-    }
+            .panel {
+                padding: 1.35rem;
+            }
 
-    .warning {
-      border-left: 4px solid var(--accent);
-      background: var(--accent-light);
-    }
+            .warning {
+                border-left: 4px solid var(--accent);
+                background: var(--accent-light);
+            }
 
-    .remedy-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.9rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
+            .remedy-list {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
 
-    .remedy {
-      padding: 1.1rem;
-    }
+            .remedy {
+                padding: 1.1rem;
+            }
 
-    .remedy h3 {
-      display: flex;
-      gap: 0.6rem;
-      align-items: baseline;
-    }
+            .remedy h3 {
+                display: flex;
+                gap: 0.6rem;
+                align-items: baseline;
+            }
 
-    .number {
-      display: inline-grid;
-      flex: 0 0 auto;
-      place-items: center;
-      width: 1.55rem;
-      height: 1.55rem;
-      border-radius: 999px;
-      background: var(--accent);
-      color: var(--bg);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      font-weight: 500;
-    }
+            .number {
+                display: inline-grid;
+                flex: 0 0 auto;
+                place-items: center;
+                width: 1.55rem;
+                height: 1.55rem;
+                border-radius: 999px;
+                background: var(--accent);
+                color: var(--bg);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.78rem;
+                font-weight: 500;
+            }
 
-    pre {
-      margin: 0.85rem 0 0;
-      padding: 1rem;
-      overflow-x: auto;
-      border-radius: var(--radius-sm);
-      background: var(--code-bg);
-      color: #f7f3ea;
-    }
+            pre {
+                margin: 0.85rem 0 0;
+                padding: 1rem;
+                overflow-x: auto;
+                border-radius: var(--radius-sm);
+                background: var(--code-bg);
+                color: #f7f3ea;
+            }
 
-    code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.86rem;
-    }
+            code {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.86rem;
+            }
 
-    :not(pre) > code {
-      background: var(--surface) !important;
-      color: var(--text-main);
-      padding: 0.08rem 0.3rem;
-      border-radius: var(--radius-sm);
-      overflow-wrap: anywhere;
-    }
+            :not(pre) > code {
+                background: var(--surface) !important;
+                color: var(--text-main);
+                padding: 0.08rem 0.3rem;
+                border-radius: var(--radius-sm);
+                overflow-wrap: anywhere;
+            }
 
-    pre code {
-      background: transparent;
-      color: inherit;
-      padding: 0;
-      border-radius: 0;
-      white-space: pre;
-    }
+            pre code {
+                background: transparent;
+                color: inherit;
+                padding: 0;
+                border-radius: 0;
+                white-space: pre;
+            }
 
-    ol,
-    ul {
-      padding-left: 1.25rem;
-    }
+            ol,
+            ul {
+                padding-left: 1.25rem;
+            }
 
-    li {
-      margin-bottom: 0.45rem;
-    }
+            li {
+                margin-bottom: 0.45rem;
+            }
 
-    .two-column {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-    }
+            .two-column {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+            }
 
-    .decision-card {
-      padding: 1rem;
-      background: var(--bg);
-    }
+            .decision-card {
+                padding: 1rem;
+                background: var(--bg);
+            }
 
-    .decision-card ul {
-      margin-bottom: 0;
-    }
+            .decision-card ul {
+                margin-bottom: 0;
+            }
 
-    .checklist {
-      display: grid;
-      gap: 1rem;
-    }
+            .checklist {
+                display: grid;
+                gap: 1rem;
+            }
 
-    .checklist .panel {
-      background: var(--bg);
-    }
+            .checklist .panel {
+                background: var(--bg);
+            }
 
-    @media (max-width: 720px) {
-      .brand-doc {
-        width: min(100% - 1rem, var(--max-width));
-        padding: 2rem 1rem 3rem;
-      }
+            @media (max-width: 720px) {
+                .brand-doc {
+                    width: min(100% - 1rem, var(--max-width));
+                    padding: 2rem 1rem 3rem;
+                }
 
-      .two-column {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <main class="brand-doc">
-    <header>
-      <h1>Git practical remedies</h1>
-      <p class="subtitle">A force-push avoidance guide for everyday Git work: sync before you push, keep work on feature branches, and abort messy rebases before they turn into risky history edits.</p>
-    </header>
+                .two-column {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="brand-doc">
+            <header>
+                <h1>Git practical remedies</h1>
+                <p class="subtitle">
+                    A force-push avoidance guide for everyday Git work: sync
+                    before you push, keep work on feature branches, and abort
+                    messy rebases before they turn into risky history edits.
+                </p>
+            </header>
 
-    <section class="section panel warning" aria-labelledby="core-rule">
-      <h2 id="core-rule">Core rule</h2>
-      <p>The force push happened because a rebase conflict got stuck. Next time, resolve conflicts cleanly or abort and use a simpler merge approach instead of forcing through.</p>
-      <p class="muted">Never force push unless absolutely necessary. If force pushing becomes common, the workflow needs adjustment.</p>
-    </section>
+            <section class="section panel warning" aria-labelledby="core-rule">
+                <h2 id="core-rule">Core rule</h2>
+                <p>
+                    The force push happened because a rebase conflict got stuck.
+                    Next time, resolve conflicts cleanly or abort and use a
+                    simpler merge approach instead of forcing through.
+                </p>
+                <p class="muted">
+                    Never force push unless absolutely necessary. If force
+                    pushing becomes common, the workflow needs adjustment.
+                </p>
+            </section>
 
-    <section class="section" aria-labelledby="remedies">
-      <h2 id="remedies">Practical remedies</h2>
-      <ol class="remedy-list">
-        <li class="remedy">
-          <h3><span class="number">1</span>Always pull before pushing</h3>
-          <pre><code>git pull --rebase
+            <section class="section" aria-labelledby="remedies">
+                <h2 id="remedies">Practical remedies</h2>
+                <ol class="remedy-list">
+                    <li class="remedy">
+                        <h3>
+                            <span class="number">1</span>Always pull before
+                            pushing
+                        </h3>
+                        <pre><code>git pull --rebase
 git push</code></pre>
-        </li>
+                    </li>
 
-        <li class="remedy">
-          <h3><span class="number">2</span>Configure Git to rebase by default</h3>
-          <pre><code>git config --global pull.rebase true</code></pre>
-        </li>
+                    <li class="remedy">
+                        <h3>
+                            <span class="number">2</span>Configure Git to rebase
+                            by default
+                        </h3>
+                        <pre><code>git config --global pull.rebase true</code></pre>
+                    </li>
 
-        <li class="remedy">
-          <h3><span class="number">3</span>Use feature branches instead of master</h3>
-          <pre><code>git checkout -b feature/my-work
+                    <li class="remedy">
+                        <h3>
+                            <span class="number">3</span>Use feature branches
+                            instead of master
+                        </h3>
+                        <pre><code>git checkout -b feature/my-work
 # work and commit
 git push origin feature/my-work
 # then merge via PR</code></pre>
-        </li>
+                    </li>
 
-        <li class="remedy">
-          <h3><span class="number">4</span>Sync cloud work before leaving</h3>
-          <pre><code>git pull --rebase
+                    <li class="remedy">
+                        <h3>
+                            <span class="number">4</span>Sync cloud work before
+                            leaving
+                        </h3>
+                        <pre><code>git pull --rebase
 git push</code></pre>
-        </li>
+                    </li>
 
-        <li class="remedy">
-          <h3><span class="number">5</span>Stash locally before cloud work</h3>
-          <pre><code>git stash
+                    <li class="remedy">
+                        <h3>
+                            <span class="number">5</span>Stash locally before
+                            cloud work
+                        </h3>
+                        <pre><code>git stash
 # do cloud work
 git pull --rebase
 git push
 # back locally
 git stash pop</code></pre>
-        </li>
+                    </li>
 
-        <li class="remedy">
-          <h3><span class="number">6</span>Fetch to check remote changes first</h3>
-          <pre><code>git fetch
+                    <li class="remedy">
+                        <h3>
+                            <span class="number">6</span>Fetch to check remote
+                            changes first
+                        </h3>
+                        <pre><code>git fetch
 git log HEAD..origin/master
 git pull --rebase
 git push</code></pre>
-          <p class="muted">Use the log command to see what your local branch is behind before pushing.</p>
-        </li>
-      </ol>
-    </section>
+                        <p class="muted">
+                            Use the log command to see what your local branch is
+                            behind before pushing.
+                        </p>
+                    </li>
+                </ol>
+            </section>
 
-    <section class="section panel" aria-labelledby="rebase-stuck">
-      <h2 id="rebase-stuck">Resolving Git conflicts cleanly</h2>
-      <h3>When rebase gets stuck</h3>
-      <ul>
-        <li><code>git rebase --continue</code> hangs or shows no output.</li>
-        <li>Multiple conflict markers appear.</li>
-        <li>You are unsure which changes to keep.</li>
-      </ul>
+            <section class="section panel" aria-labelledby="rebase-stuck">
+                <h2 id="rebase-stuck">Resolving Git conflicts cleanly</h2>
+                <h3>When rebase gets stuck</h3>
+                <ul>
+                    <li>
+                        <code>git rebase --continue</code> hangs or shows no
+                        output.
+                    </li>
+                    <li>Multiple conflict markers appear.</li>
+                    <li>You are unsure which changes to keep.</li>
+                </ul>
 
-      <h3>Abort if stuck</h3>
-      <pre><code>git rebase --abort
+                <div
+                    style="
+                        margin: 1.25rem 0;
+                        padding: 1rem;
+                        background: var(--bg);
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius-md);
+                    "
+                >
+                    <h4 style="margin-top: 0; font-size: 1rem">
+                        Showcase: JSON conflict resolution
+                    </h4>
+                    <p class="muted" style="font-size: 0.9rem">
+                        JSON files are sensitive to markers. A single
+                        <code><<<<<<<</code> breaks the entire structure.
+                    </p>
+                    <ol style="font-size: 0.9rem; margin-bottom: 0">
+                        <li>
+                            <strong>Locate:</strong>
+                            <code>git status</code> shows
+                            <code>both modified: index.json</code>.
+                        </li>
+                        <li>
+                            <strong>Edit:</strong> Open <code>index.json</code>,
+                            find conflict blocks, and ensure the resulting JSON
+                            is valid (check commas and brackets).
+                        </li>
+                        <li>
+                            <strong>Stage:</strong>
+                            <code>git add index.json</code>.
+                        </li>
+                        <li>
+                            <strong>Proceed:</strong>
+                            <code>git rebase --continue</code>.
+                        </li>
+                    </ol>
+                </div>
+
+                <h3>Abort if stuck</h3>
+                <pre><code>git rebase --abort
 # returns you to the state before rebase started</code></pre>
 
-      <h3>Use regular merge instead</h3>
-      <pre><code>git pull
+                <h3>Use regular merge instead</h3>
+                <pre><code>git pull
 # resolve conflicts in files
 git add &lt;resolved-files&gt;
 git commit
 git push</code></pre>
 
-      <h3>If you must rebase, do it step by step</h3>
-      <pre><code>git fetch
+                <h3>If you must rebase, do it step by step</h3>
+                <pre><code>git fetch
 git rebase origin/master
 # when conflict appears:
 # edit the file
@@ -306,88 +382,98 @@ git add &lt;file&gt;
 git rebase --continue
 # if it gets stuck again:
 git rebase --abort</code></pre>
-    </section>
+            </section>
 
-    <section class="section panel" aria-labelledby="best-practices">
-      <h2 id="best-practices">Conflict resolution best practices</h2>
-      <h3>Understand what you are merging</h3>
-      <pre><code>git log --oneline --graph --all</code></pre>
+            <section class="section panel" aria-labelledby="best-practices">
+                <h2 id="best-practices">Conflict resolution best practices</h2>
+                <h3>Understand what you are merging</h3>
+                <pre><code>git log --oneline --graph --all</code></pre>
 
-      <h3>Check what may conflict</h3>
-      <pre><code>git fetch
+                <h3>Check what may conflict</h3>
+                <pre><code>git fetch
 git diff HEAD origin/master</code></pre>
 
-      <h3>Resolve manually</h3>
-      <ul>
-        <li>Open conflicted files in your editor.</li>
-        <li>Compare both versions: HEAD and incoming.</li>
-        <li>Choose the correct code or combine both.</li>
-        <li>Remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> markers completely.</li>
-        <li>Test the changes.</li>
-      </ul>
+                <h3>Resolve manually</h3>
+                <ul>
+                    <li>Open conflicted files in your editor.</li>
+                    <li>Compare both versions: HEAD and incoming.</li>
+                    <li>Choose the correct code or combine both.</li>
+                    <li>
+                        Remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>,
+                        <code>=======</code>, and
+                        <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> markers
+                        completely.
+                    </li>
+                    <li>Test the changes.</li>
+                </ul>
 
-      <h3>Verify before committing</h3>
-      <pre><code>git status
+                <h3>Verify before committing</h3>
+                <pre><code>git status
 git diff --cached
 # run tests if applicable
 git commit</code></pre>
-    </section>
+            </section>
 
-    <section class="section two-column" aria-labelledby="abort-resolve">
-      <div class="decision-card">
-        <h2 id="abort-resolve">Abort when</h2>
-        <ul>
-          <li>There are too many conflicts to handle cleanly.</li>
-          <li>You are unsure which changes are correct.</li>
-          <li>The rebase has been running unusually long.</li>
-          <li>You want to get back to a working state.</li>
-        </ul>
-      </div>
+            <section class="section two-column" aria-labelledby="abort-resolve">
+                <div class="decision-card">
+                    <h2 id="abort-resolve">Abort when</h2>
+                    <ul>
+                        <li>There are too many conflicts to handle cleanly.</li>
+                        <li>You are unsure which changes are correct.</li>
+                        <li>The rebase has been running unusually long.</li>
+                        <li>You want to get back to a working state.</li>
+                    </ul>
+                </div>
 
-      <div class="decision-card">
-        <h2>Resolve when</h2>
-        <ul>
-          <li>Conflicts are few and clear.</li>
-          <li>You understand both sets of changes.</li>
-          <li>The changes are important to preserve correctly.</li>
-        </ul>
-      </div>
-    </section>
+                <div class="decision-card">
+                    <h2>Resolve when</h2>
+                    <ul>
+                        <li>Conflicts are few and clear.</li>
+                        <li>You understand both sets of changes.</li>
+                        <li>
+                            The changes are important to preserve correctly.
+                        </li>
+                    </ul>
+                </div>
+            </section>
 
-    <section class="section panel" aria-labelledby="merge-commits">
-      <h2 id="merge-commits">Alternative: use merge commits</h2>
-      <p>Instead of rebasing, which rewrites local commit shape, use merge commits to preserve both histories.</p>
-      <pre><code>git config --global pull.rebase false
+            <section class="section panel" aria-labelledby="merge-commits">
+                <h2 id="merge-commits">Alternative: use merge commits</h2>
+                <p>
+                    Instead of rebasing, which rewrites local commit shape, use
+                    merge commits to preserve both histories.
+                </p>
+                <pre><code>git config --global pull.rebase false
 git pull
 # creates a merge commit preserving both histories
 # no force push needed</code></pre>
-    </section>
+            </section>
 
-    <section class="section checklist" aria-labelledby="prevention">
-      <h2 id="prevention">Prevention checklist</h2>
-      <div class="panel">
-        <h3>Before leaving cloud environment</h3>
-        <pre><code>git status
+            <section class="section checklist" aria-labelledby="prevention">
+                <h2 id="prevention">Prevention checklist</h2>
+                <div class="panel">
+                    <h3>Before leaving cloud environment</h3>
+                    <pre><code>git status
 git pull --rebase
 git push</code></pre>
-      </div>
+                </div>
 
-      <div class="panel">
-        <h3>Before starting local work</h3>
-        <pre><code>git fetch
+                <div class="panel">
+                    <h3>Before starting local work</h3>
+                    <pre><code>git fetch
 git status
 # check if you are behind</code></pre>
-      </div>
+                </div>
 
-      <div class="panel">
-        <h3>Use feature branches</h3>
-        <pre><code>git checkout -b feature/work
+                <div class="panel">
+                    <h3>Use feature branches</h3>
+                    <pre><code>git checkout -b feature/work
 # work on feature branch
 git push origin feature/work
 # merge via PR when done
 # master stays clean</code></pre>
-      </div>
-    </section>
-  </main>
-</body>
+                </div>
+            </section>
+        </main>
+    </body>
 </html>
