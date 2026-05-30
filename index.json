@@ -18,7 +18,7 @@
     "path": "src/documents/git/git_best_practices_guide.html",
     "category": "git",
     "ext": "html",
-    "size": 11232
+    "size": 20346
   },
   {
     "name": "git_branch_workflow_guide",
@@ -32,7 +32,7 @@
     "path": "src/documents/git/git_practical_remedies.html",
     "category": "git",
     "ext": "html",
-    "size": 10161
+    "size": 15887
   },
   {
     "name": "git_repo__renaming",
