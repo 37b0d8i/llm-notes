@@ -31,12 +31,13 @@
   }
 
   .brand-doc {
-    max-width: 920px;
+    width: min(100% - 2rem, 920px);
     margin: 0 auto;
     padding: 2.75rem 1.5rem 4rem;
     font-family: var(--font-sans);
     color: var(--text-main);
     line-height: 1.7;
+    overflow-x: hidden;
   }
 
   .brand-doc > div:first-of-type {
@@ -59,9 +60,22 @@
     overflow-wrap: anywhere;
   }
 
+  .brand-doc pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
   .brand-doc svg text {
     font-family: var(--font-sans);
     fill: currentColor;
+  }
+
+  @media (max-width: 640px) {
+    .brand-doc {
+      width: min(100% - 1rem, 920px);
+      padding: 2rem 1rem 3rem;
+    }
   }
 </style>
 <div class="brand-doc" style="font-family: var(--font-sans); color: var(--text-main);">

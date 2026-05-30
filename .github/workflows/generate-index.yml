@@ -12,6 +12,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -20,16 +22,11 @@ jobs:
       - name: Generate index.json
         run: node src/_scripts/generate_index.mjs
 
-      - name: Commit & push
+      - name: Commit & push safely
         env:
           BRANCH_NAME: ${{ github.ref_name }}
         run: |
+          git checkout -B "$BRANCH_NAME"
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.json
-          if git diff --cached --quiet -- index.json; then
-            echo "No changes"
-            exit 0
-          fi
-          git commit -m "chore: regenerate index.json"
-          git push origin HEAD:"$BRANCH_NAME"
+          bash scripts/safe_git_push.sh "chore: regenerate index.json" index.json

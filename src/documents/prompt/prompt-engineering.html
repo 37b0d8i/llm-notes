@@ -32,12 +32,14 @@
       background-color: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
+      margin: 0;
       padding: 80px 24px;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 960px;
+      width: min(100% - 2rem, 960px);
       margin: 0 auto;
     }
 
@@ -162,6 +164,16 @@
       letter-spacing: -0.01em;
     }
 
+    pre {
+      max-width: 100%;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    :not(pre) > code {
+      overflow-wrap: anywhere;
+    }
+
     /* --- Responsive Breakpoints --- */
     @media (max-width: 900px) {
       .cards-grid {
@@ -176,7 +188,7 @@
     }
 
     @media (max-width: 600px) {
-      body { padding: 48px 20px; }
+      body { padding: 48px 16px; }
       header { margin-bottom: 40px; }
       h1 { font-size: 2rem; }
       .cards-grid {

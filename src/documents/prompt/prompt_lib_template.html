@@ -35,11 +35,13 @@
             color: var(--text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            margin: 0;
             padding: 80px 24px;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: var(--max-width);
+            width: min(100% - 2rem, var(--max-width));
             margin: 0 auto;
         }
 
@@ -224,8 +226,12 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             overflow-x: auto;
-            white-space: pre-wrap;
-            word-break: break-all;
+            white-space: pre;
+            max-width: 100%;
+        }
+
+        :not(pre) > code {
+            overflow-wrap: anywhere;
         }
 
         code {
