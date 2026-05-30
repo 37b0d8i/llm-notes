@@ -1,5 +1,12 @@
 [
   {
+    "name": "safe_git_push",
+    "path": "scripts/safe_git_push.sh",
+    "category": "safe_git_push.sh",
+    "ext": "sh",
+    "size": 1762
+  },
+  {
     "name": "git_best_practices_guide",
     "path": "src/documents/git/git_best_practices_guide.html",
     "category": "git",
